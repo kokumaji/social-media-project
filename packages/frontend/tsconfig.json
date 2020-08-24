@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"lib": ["dom", "dom.iterable"],
+		"jsx": "preserve",
+	},
+	"extends": "../../tsconfig.json",
+	"include": ["src/**/*.*"],
+	"files": ["./webpack/env.d.ts"]
+}
