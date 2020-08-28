@@ -10,8 +10,9 @@ console.log("made with 💜 by skye\n");
 dotenv.config();
 
 const server = new KokuServer({
-    databaseUri: process.env.DATABASE_URI || "mongodb://localhost:27017/kokumaji",
+    databaseUri: process.env.DATABASE_URI || "",
     port: Number(process.env.PORT) || 3000,
 });
 
+server.logger.level = "debug";
 server.start();

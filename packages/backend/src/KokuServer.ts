@@ -1,8 +1,10 @@
+import bodyParser from "body-parser";
 import chalk from "chalk";
+import cors from "cors";
 import express from "express";
 import { connect } from "mongoose";
+import morgan from "morgan";
 import { createLogger, format, transports } from "winston";
-
 import { registerRoutes } from "./routes";
 
 // logging imports
@@ -37,10 +39,11 @@ export class KokuServer {
             simple(),
             fmt
         ),
-    });
+    }); 
 
     constructor(readonly options: KokuServerSettings) {
         // this.connection = createConnection(this.options.databaseUri);
+        this.app.use(morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })).use(cors()).use(bodyParser.json());
     }
 
     /**
@@ -58,7 +61,9 @@ export class KokuServer {
         this.logger.verbose("Registering routes...");
         registerRoutes(this);
 
-        this.app.listen(this.options.port);
+        this.app.listen(this.options.port, 'localhost');
         this.logger.info(`Listening on port ${this.options.port}`);
+        
     }
+
 }

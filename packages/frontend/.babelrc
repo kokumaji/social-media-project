@@ -1,19 +1,23 @@
 {
   "presets": [
+    "@babel/preset-typescript",
     [
       "@babel/preset-env",
       {
-        "targets": "last 2 versions, ie 11",
-        "modules": false
+        "exclude": [
+          "babel-plugin-transform-regenerator",
+          "babel-plugin-transform-classes"
+        ]
       }
     ],
     "@babel/preset-react"
   ],
   "plugins": [
-    // plugin-proposal-decorators is only needed if you're using experimental decorators in TypeScript
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-class-properties", { "loose": true }],
     "react-hot-loader/babel",
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-optional-chaining",
     "babel-plugin-styled-components"
   ]
 }
