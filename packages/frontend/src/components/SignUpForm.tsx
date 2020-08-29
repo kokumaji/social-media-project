@@ -135,7 +135,7 @@ class SignUpWrapper extends React.Component<{ userState: UserStateProvider }, { 
                 return;
             }
             
-            let res = await this.props.userState.register( this.state.username, this.state.email, this.state.password);
+            let res = await this.props.userState.register( this.state.username, this.state.email, this.state.password );
             console.log(res);
         } catch(err) {
             console.error(err);

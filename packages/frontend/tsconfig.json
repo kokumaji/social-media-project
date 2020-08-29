@@ -5,5 +5,5 @@
 	},
 	"extends": "../../tsconfig.json",
 	"include": ["src/**/*.*"],
-	"files": ["./webpack/env.d.ts"]
+	"files": ["./webpack/env.d.ts", "./images.d.ts"]
 }

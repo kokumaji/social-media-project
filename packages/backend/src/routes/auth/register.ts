@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
 import { Router } from "express";
-import * as IdGen from '../../api/objects/Snowflake';
+import * as jwt from "jsonwebtoken";
 
+import * as IdGen from "../../api/objects/Snowflake";
 import { ClientUser } from "../../models/ClientUser";
 import { RH } from "../types";
 
@@ -28,5 +29,6 @@ export const register: RH = (server) => async (req, res) => {
     const clientUser = new ClientUser({ username, email, password: hashed, id: IdGen.generate()})
     await clientUser.save();
 
-    return res.json(true);
+    var token = jwt.sign({ id: clientUser.id }, server.options.authSecret )
+    return res.status(200).send({ auth: true, token: token });
 };

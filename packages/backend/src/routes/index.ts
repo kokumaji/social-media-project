@@ -1,6 +1,6 @@
 import { KokuServer } from "../KokuServer";
 import { authorize } from "./auth/authorize";
-import { getUser, getUsers } from "./public/user";
+import { getUser, getUsers, validateToken } from "./public/user";
 import { register } from "./auth/register";
 
 export const registerRoutes = (server: KokuServer) => { 

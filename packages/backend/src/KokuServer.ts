@@ -20,6 +20,7 @@ const fmt = printf(({ level, message, label, timestamp }) => {
 interface KokuServerSettings {
     databaseUri: string;
     port: number;
+    authSecret: string;
 }
 
 /**

@@ -56,7 +56,7 @@ export class UserManager extends React.Component<{}, UserState> {
             const { data } = await users.register( username, email, password);
             // Update state.
             this.setState({ authed: true, id: data.id });
-            console.log("registration successful");
+            console.log(data);
             return true;
         } catch (e) {
             console.error(e);

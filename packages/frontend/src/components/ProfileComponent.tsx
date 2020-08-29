@@ -11,17 +11,17 @@ import { getColorScheme } from "../theme/colorScheme/profileCards";
 import { UserWithCardScheme } from "../types/User";
 import { Post } from "./data/Post";
 
-const cardScheme = getColorScheme('cottonCandy');
+const cardScheme = getColorScheme('defaultDark');
 
 const Wrapper = styled.div`
     font-family: 'Nunito', sans-serif;
     height: 100vh;
-    width 45vw;
+    width: 45vw;
     display: flex;
     flex-direction: column;
     justify-content: spread-evenly;
 
-    @media screen and (max-width : 768px) {
+    @media screen and (max-width : 800px) {
         {
             display: flex;
             flex-direction: column;
@@ -34,6 +34,7 @@ const Wrapper = styled.div`
 const CardWrapper = styled.div`
     width: 100%;
     height: auto;
+    
 `;
 
 const PostWrapper = styled.div`
@@ -65,7 +66,7 @@ const ProfileCard = styled.div`
         margin-top: -8em;
         border-radius: 50%;
         height: 10em;
-        width: auto;
+        width: 10em;
         border-style: solid;
         border-width: 0.3em;
         border-color: ${cardScheme?.cardBackground};
@@ -80,6 +81,7 @@ const ProfileBanner = styled.div`
 `;
 
 const NameContainer = styled.div`
+    margin-bottom: 2em; 
     p {
         font-size: 0.95em;
         color: ${cardScheme?.cardUserText};
@@ -120,16 +122,18 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
             username: '',
             fullname: '',
             location: '',
+            description: '',
             gender: '',
             joined: new Date(0),
             profileImg: '',
+            bannerImg: '',
             cardScheme: '',
             cardColor: {
-                name: 'Minted Green',
-                cardBackground: '#c3d8d1',
-                cardBannerBg: '#557d68',
-                cardText: '#4e4e4e',
-                cardUserText: '#7a8e88'        
+                name: '',
+                cardBackground: '',
+                cardBannerBg: '',
+                cardText: '',
+                cardUserText: ''        
             }
         },
         notFound: false
@@ -138,17 +142,21 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
     async componentDidMount() {
         const id = this.props.match.params.id;
         try {
-            const user = await getUser(id);
+            var user = await getUser(id);
+
+            console.log(user);
 
             this.setState({ userData: {
-                username: user.profile.username,
-                fullname: user.profile.fullname,
-                location: user.profile.location,
-                gender: user.profile.gender,
+                username: user.user.username,
+                fullname: user.user.fullname,
+                location: user.user.location,
+                description: user.user.profile.description,
+                gender: user.user.gender,
                 joined: new Date(user.createdAt),
-                profileImg: user.profile.profileImageUrl,
-                cardScheme: user.profile.cardScheme,
-                cardColor: getColorScheme(user.profile.cardScheme)
+                profileImg: user.user.profile.imageUrl,
+                bannerImg: user.user.profile.bannerUrl,
+                cardScheme: user.user.profile.cardScheme,
+                cardColor: getColorScheme(user.user.profile.cardScheme)
             }});
         } catch(err) {
             this.setState({ notFound: true });
@@ -159,7 +167,10 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
     
     render() {
         var bannerBg = {
-            backgroundColor: this.state.userData.cardColor.cardBannerBg
+            backgroundColor: this.state.userData.cardColor.cardBannerBg,
+            backgroundImage: `url(${this.state.userData.bannerImg})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover'
         }
 
         var userNameColor = {
@@ -172,7 +183,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
             color: this.state.userData.cardColor.cardText
         };
 
-        var numberOfPosts = 8;
+        var numberOfPosts = 1;
 
         var posts = [];
     
@@ -190,7 +201,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
                             <h2>{this.state.userData.fullname}</h2>
                             <p style={userNameColor}>@{this.state.userData.username}</p>
                         </NameContainer>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum facilisis quam eu consectetur euismod. Mauris ipsum viverra.</p>
+                        <p>{!this.state.userData.description ? 'No description provided.' : this.state.userData.description }</p>
 
                         <AboutContainer>
                             <AboutField title='Location'>

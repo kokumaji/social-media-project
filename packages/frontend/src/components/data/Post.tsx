@@ -2,12 +2,17 @@ import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "styled-components";
 
+import Icon from '../media/Icon';
+
 import { getMonthYear } from "../../api/ReadableDate";
 import { getUser } from "../../api/users";
 import { getColorScheme } from "../../theme/colorScheme/profileCards";
 import { User } from "../../types/User";
 
 const PostContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-between;
     width: 100%;
     min-height: 16em;
     border-radius: 1em;
@@ -56,6 +61,27 @@ const MessageContainer = styled.div`
     width: 100%;
 `;
 
+const InteractContainer = styled.div`
+    width: 100%;
+    bottom: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 3em;
+`;
+
+const ActionHandler = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: center;
+    img {
+        margin-right: 0.35em;
+        height: 1.5em;
+        width: 1.5em;
+    }
+`;
+
 export class Post extends React.Component<{author: User, message: string}> {
     render() {
         return(
@@ -74,6 +100,16 @@ export class Post extends React.Component<{author: User, message: string}> {
                         {this.props.message}
                     </p>
                 </MessageContainer>
+                <InteractContainer>
+                    <ActionHandler>
+                        <Icon name='reply' />
+                        <p>10K</p>
+                    </ActionHandler>
+                    <ActionHandler>
+                        <Icon name='favorite' />
+                        <p>10K</p>
+                    </ActionHandler>
+                </InteractContainer>
             </PostContainer>
         );
     }

@@ -12,7 +12,23 @@ export const getColorScheme = (name: string): CardScheme => {
     }else if(name === 'clearOcean') {
         return clearOcean;
     }
-    return mintedGreen;
+    return defaultDark;
+};
+
+export const defaultLight: CardScheme = {
+    name: 'Default Light',
+    cardBackground: 'white',
+    cardBannerBg: '#9fa1a5',
+    cardText: 'black',
+    cardUserText: '#9fa1a5'
+};
+
+export const defaultDark: CardScheme = {
+    name: 'Default Dark',
+    cardBackground: '#363f44',
+    cardBannerBg: '#9fa1a5',
+    cardText: 'white',
+    cardUserText: '#9fa1a5'
 };
 
 export const mintedGreen: CardScheme = {
