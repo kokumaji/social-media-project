@@ -40,7 +40,7 @@ export class UserManager extends React.Component<{}, UserState> {
 
             // Update state.
             this.setState({ authed: true, id: data.id });
-            console.log("authentication successful");
+            console.log(data);
             return true;
         } catch (e) {
             console.error(e);

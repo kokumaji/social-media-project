@@ -3,6 +3,7 @@ export interface CardScheme {
     cardBackground: string;
     cardBannerBg: string;
     cardText: string;
-    cardUserText: string;        
+    cardUserText: string;   
+    cardActionColor: string;     
 }
 

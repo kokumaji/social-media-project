@@ -13,7 +13,6 @@ export const GlobalStyles = createGlobalStyle`
   body {
     align-items: center;
     font-family: 'Nunito', sans-serif;
-    height: 100%;
     
     background: ${darkTheme.body};
     color: ${darkTheme.text};

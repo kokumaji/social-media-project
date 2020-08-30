@@ -53,16 +53,13 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(png|webp|jpg)$/,
-                loader: "url-loader",
-                options: {
-                    limit: 8192,
-                },
+                test: /\.(png|jpg|gif)$/,
+                loader: 'url-loader'
             },
             {
-                test: /\.(png|webp|jpe?g|svg)$/,
-                loader: "file-loader",
-            },
+                test: /\.svg$/,
+                loader: "@svgr/webpack",
+            }
         ],
     },
 };

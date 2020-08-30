@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { NotFound } from '../views/NotFound';
 
-import { getMonthYear } from "../api/ReadableDate";
+import { getMonthYear } from "../api/ReadableData";
 import { getUser } from "../api/users";
 import { getColorScheme } from "../theme/colorScheme/profileCards";
 import { UserWithCardScheme } from "../types/User";
@@ -14,10 +14,10 @@ import { Post } from "./data/Post";
 const cardScheme = getColorScheme('defaultDark');
 
 const Wrapper = styled.div`
+    height: 100%;
     font-family: 'Nunito', sans-serif;
-    height: 100vh;
     width: 45vw;
-    display: flex;
+    display: grid;
     flex-direction: column;
     justify-content: spread-evenly;
 
@@ -38,9 +38,24 @@ const CardWrapper = styled.div`
 `;
 
 const PostWrapper = styled.div`
-    width: 100%;
+    height: 100%;
+    height: 100%;
     background-color: #22272b;
     padding: 1em;
+
+    > h2 {
+        text-align: center;
+        margin-top: 3em;
+        user-select: none;
+        color: #363F44;
+    }
+
+    > p {
+        text-align: center;
+        user-select: none;
+
+        color: #363F44;
+    }
 `;
 
 const ProfileCard = styled.div`
@@ -133,7 +148,8 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
                 cardBackground: '',
                 cardBannerBg: '',
                 cardText: '',
-                cardUserText: ''        
+                cardUserText: '',
+                cardActionColor: ''       
             }
         },
         notFound: false
@@ -183,7 +199,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
             color: this.state.userData.cardColor.cardText
         };
 
-        var numberOfPosts = 1;
+        var numberOfPosts = 0;
 
         var posts = [];
     
@@ -220,7 +236,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
                     </ProfileCard>
                 </CardWrapper>
                 <PostWrapper>
-                    {posts}
+                    {posts.length > 0 ? posts : <><h2>No Posts Found.</h2><p>This user hasn't posted anything.</p></>}
                 </PostWrapper>
             </Wrapper>
         ) : <NotFound />;

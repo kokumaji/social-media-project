@@ -2,12 +2,11 @@ import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "styled-components";
 
-import Icon from '../media/Icon';
-
-import { getMonthYear } from "../../api/ReadableDate";
+import * as formatter from "../../api/ReadableData";
 import { getUser } from "../../api/users";
 import { getColorScheme } from "../../theme/colorScheme/profileCards";
 import { User } from "../../types/User";
+import { Icon } from "../media/Icon";
 
 const PostContainer = styled.div`
 display: flex;
@@ -75,26 +74,53 @@ const ActionHandler = styled.div`
     flex-direction: row;
     margin: auto;
     align-items: center;
-    img {
-        margin-right: 0.35em;
+    color: #bcbcbc;
+    transition: 0.1s;
+    user-select: none;
+    img, svg {
+        margin-right: 0.6em;
         height: 1.5em;
-        width: 1.5em;
+        width: auto;
+
     }
+    
+    :hover {
+        transition: 0.1s;
+        filter: invert(46%) sepia(22%) saturate(268%) hue-rotate(157deg) brightness(89%) contrast(86%);
+        cursor: pointer;
+    }
+    
+`;
+
+const PostHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+const Timestamp = styled.div`
+    color: #bcbcbc;
+    width: 6em;
+    padding: 0.5em;
+    text-align: center;
 `;
 
 export class Post extends React.Component<{author: User, message: string}> {
     render() {
         return(
             <PostContainer>
-                <PostAuthor>
-                    <ImageContainer>
-                        <img src={this.props.author.profileImg === null ? 'https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg' : this.props.author.profileImg } />
-                    </ImageContainer>
-                    <UserInfo>
-                        <h2><a href={`http://localhost:3000/u/${this.props.author.username}`}>{this.props.author.fullname}</a></h2>
-                        <p>@{this.props.author.username}</p>
-                    </UserInfo>
-                </PostAuthor>
+                <PostHeader>
+                    <PostAuthor>
+                        <ImageContainer>
+                            <img src={this.props.author.profileImg === null ? 'https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg' : this.props.author.profileImg } />
+                        </ImageContainer>
+                        <UserInfo>
+                            <h2><a href={`http://localhost:3000/u/${this.props.author.username}`}>{this.props.author.fullname}</a></h2>
+                            <p>@{this.props.author.username}</p>
+                        </UserInfo>
+                    </PostAuthor>
+        <Timestamp><p>{formatter.getReadableDifference(1504044000000)} ago</p></Timestamp>
+                </PostHeader>
                 <MessageContainer>
                     <p>
                         {this.props.message}
@@ -103,11 +129,11 @@ export class Post extends React.Component<{author: User, message: string}> {
                 <InteractContainer>
                     <ActionHandler>
                         <Icon name='reply' />
-                        <p>10K</p>
+                        <p>{formatter.getReadableCount(1210000) || 0}</p>
                     </ActionHandler>
                     <ActionHandler>
                         <Icon name='favorite' />
-                        <p>10K</p>
+                        <p>{formatter.getReadableCount(1232) || 0}</p>
                     </ActionHandler>
                 </InteractContainer>
             </PostContainer>
