@@ -17,10 +17,6 @@ const Wrapper = styled.div`
     height: 100%;
     font-family: 'Nunito', sans-serif;
     width: 45vw;
-    display: grid;
-    flex-direction: column;
-    justify-content: spread-evenly;
-
     @media screen and (max-width : 800px) {
         {
             display: flex;
@@ -38,7 +34,6 @@ const CardWrapper = styled.div`
 `;
 
 const PostWrapper = styled.div`
-    height: 100%;
     height: 100%;
     background-color: #22272b;
     padding: 1em;
