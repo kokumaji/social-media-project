@@ -20,10 +20,7 @@ export const getUser: RH = (server) => async (req, res) => {
 			.json({ msg: `Bad Request, no user with id ${userId}` });
 	}
 
-	const clientProfile = await User.findOne(
-		{ username: clientUser.username },
-		{ _id: 0 }
-	);
+	const clientProfile = await User.findOne({ username: clientUser.username }, { _id: 0 });
 	if (!clientProfile) {
 		return res
 			.status(400)

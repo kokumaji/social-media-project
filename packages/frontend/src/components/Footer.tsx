@@ -6,7 +6,7 @@ const FooterWrapper = styled.div`
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	background-color: #384853;
+	background-color: #181818;
 	color: white;
 	padding-left: 1em;
 	font-size: 12px;
@@ -21,7 +21,7 @@ const FooterWrapper = styled.div`
 export const Footer = () => (
 	<FooterWrapper>
 		<p>
-			<a href="#">Kokumaji</a> &copy; 2020
+			<a href="#">Kokumaji</a> &copy; {new Date().getFullYear()}
 		</p>
 	</FooterWrapper>
 );

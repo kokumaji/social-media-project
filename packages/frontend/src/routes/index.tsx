@@ -1,6 +1,7 @@
 import * as React from "react";
 import { RouteConfig } from "react-router-config";
 import { Link } from "react-router-dom";
+import { HomePage } from "../views/Home";
 
 import { LoginPage } from "../views/Login";
 import { NotFound } from "../views/NotFound";
@@ -21,6 +22,11 @@ export const routes: RouteConfig[] = [
 		component: () => <LoginPage />,
 		path: "/login",
 		key: "login",
+	},
+	{
+		component: () => <HomePage />,
+		path: "/home",
+		key: "home",
 	},
 	{
 		component: () => <SignUpPage />,

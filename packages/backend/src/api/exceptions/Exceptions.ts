@@ -20,6 +20,12 @@ export class BadRequest extends GenericError {
 	}
 }
 
+export class NotFound extends GenericError {
+	constructor(msg: string) {
+		super("NotFound", `Not Found! ${msg}`, 404);
+	}
+}
+
 export class RequestDenied extends GenericError {
 	constructor(errorMessage?: string) {
 		super("RequestDenied", `Request Denied! ${errorMessage}`, 403);

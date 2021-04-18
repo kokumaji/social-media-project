@@ -7,6 +7,7 @@ import { ClientUser } from "../../models/ClientUser";
 import { RH } from "../types";
 
 import { RequestDenied } from "../../api/exceptions/Exceptions";
+import { User } from "../../models/User";
 
 export const register: RH = (server) => async (req, res) => {
 	// We strictly want to work with JSON requests, so let's block urlencoded entirely
@@ -49,7 +50,26 @@ export const register: RH = (server) => async (req, res) => {
 		password: hashed,
 		id: IdGen.generate(),
 	});
+
+	/*
+	const clientProfile = new User({
+		username,
+		fullname: username.toUpperCase(),
+		age: 19,
+		location: whatTheySelected,
+		gender: whatTheySelected,
+		profile: {
+			imageUrl: "null",
+			description: "null",
+			bannerUrl: "null",
+			cardScheme: "SummerSunset"
+		}
+	});
+	
+	await clientProfile.save();*/
+
 	await clientUser.save();
+
 
 	const token = jwt.sign({ id: clientUser.id }, server.options.authSecret);
 	return res.status(200).send({ auth: true, token: token });

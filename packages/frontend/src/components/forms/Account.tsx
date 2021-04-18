@@ -3,9 +3,11 @@ import styled from "styled-components";
 
 import { darkTheme } from "../../theme/colorScheme/main";
 
-const fieldHeight = "4em";
+const fieldHeight = "3.5em";
 const fieldWidth = "80%";
-const fieldBorder = "border-radius:1em;border-style:none;";
+const fieldBorder = "border-radius:0.25em;border-style:none;";
+const fieldFont = "font-size: 0.85em;";
+const fieldFocus = ":focus { background-color: #4b4b4b; outline: none; }";
 
 const fixPlaceholder = `
     ::placeholder {
@@ -16,26 +18,23 @@ const fixPlaceholder = `
 export const InputField = styled.input`
 	${fieldBorder}
 	color:${darkTheme.text};
-	background-color: #4f6675;
+	background-color: #2b2b2b;
 	width: ${fieldWidth};
 	height: ${fieldHeight};
 	padding: 1em;
-	margin: 1.75em;
+	margin: 1.5em;
+	${fieldFont}
 
 	${fixPlaceholder}
+
+	${fieldFocus}
 `;
 
-export const Error = styled.div`
-	position: absolute;
-	height: 3em;
-	width: 90%;
-	background-color: #ffb5b5;
-	color: #ff3d3d;
-	border-radius: 0.35em;
-	padding: 1em;
-	top: 10px;
-	border-style: solid;
-	border-width: 1px;
+export const Error = styled.label`
+	margin-bottom: 0.5em;
+	display: block;
+	font-size: 0.75em;
+	color: red;
 `;
 
 export const ConfirmButton = styled.button`
@@ -59,13 +58,16 @@ export const ConfirmButton = styled.button`
 export const PasswordField = styled.input`
 	${fieldBorder}
 	color:${darkTheme.text};
-	background-color: #4f6675;
+	background-color: #2b2b2b;
 	width: 100%;
 	height: ${fieldHeight};
 	padding: 1em;
 	margin: 0px;
+	${fieldFont}
 
 	${fixPlaceholder}
+
+	${fieldFocus}
 `;
 
 export const FieldRow = styled.div`
@@ -80,20 +82,28 @@ export const FieldRow = styled.div`
 	}
 `;
 
+export const FieldLabel = styled.label`
+	margin-top: 1.75em;
+`;
+
 export const Spacer = styled.span`
 	height: 100%;
 	width: 1em;
 `;
 
 export const HideSensitive = styled.button`
-	min-width: 20%;
 	position: absolute;
-	border-radius: 5px;
-	z-index: 2;
-	border: none;
-	cursor: pointer;
-	color: white;
-	background-color: rgba(0, 0, 0, 0);
-	right: 0;
-	height: 70%;
+
+	border: 0px; 
+	border-radius: 0px;
+	
+	border-left: 1px solid ${darkTheme.body};
+
+	cursor: pointer; 
+	color: white; 
+	background-color: rgba(0,0,0,0); 
+	
+	top: 20%;
+	right: 8px;
+	z-index: 2; 
 `;

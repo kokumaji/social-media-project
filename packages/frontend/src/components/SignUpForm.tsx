@@ -9,20 +9,18 @@ import * as Form from "./forms/Account";
 //import * as
 
 const SignUpContainer = styled.div`
-	background-color: #384853;
+	background-color: #202020;
 	width: 80vh;
 	max-width: 800px;
 	/* height: 70vh; */
 	/* max-height: 800px; */
-	border-radius: 0.75em;
+	border-radius: 0.25em;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 
-	padding: 2em;
-
-	box-shadow: 0px 0px 5px 5px #0002;
+	padding: 3em;
 
 	a {
 		color: white;

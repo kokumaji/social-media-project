@@ -25,4 +25,4 @@ export const register = (username: string, email: string, password: string) =>
 		username,
 		email,
 		password,
-	});
+});

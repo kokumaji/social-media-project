@@ -7,17 +7,20 @@ import * as users from "../api/users";
 import { UserContext, UserStateProvider } from "../components/data/UserManager";
 import * as Form from "./forms/Account";
 
+import * as Variables from "../api/Variables";
+
 const LoginContainer = styled.div`
-	background-color: #384853;
+	background-color: #202020;
 	width: 80vh;
 	max-width: 400px;
 	height: 70vh;
 	max-height: 500px;
-	border-radius: 0.75em;
+	border-radius: 0.25em;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	margin: auto;
 
 	a {
 		color: white;
@@ -38,7 +41,8 @@ class LoginFormWrapper extends React.Component<
 		username: "",
 		password: "",
 		loginFailed: false,
-		showPwd: false
+		showPwd: false,
+		buttonColor: "#181818"
 	};
 
 	/**
@@ -54,6 +58,9 @@ class LoginFormWrapper extends React.Component<
 	private handlePasswordInput(e: React.ChangeEvent<HTMLInputElement>) {
 		this.setState({ password: e.target.value });
 		if (e.target.value === "") this.setState({ loginFailed: false });
+		if(e.target.value.length >= 8) {
+			this.state.buttonColor = '#5e8c83';
+		} else this.state.buttonColor = '#181818';
 	}
 
 	/**
@@ -70,6 +77,7 @@ class LoginFormWrapper extends React.Component<
 	 */
 	private async tryLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		e.preventDefault();
+
 		try {
 			const successful = await this.props.userState.authenticate(
 				this.state.username,
@@ -91,20 +99,28 @@ class LoginFormWrapper extends React.Component<
 			color: `${borderColor}`,
 			transition: "0.1s"
 		};
+		const buttonStyle = {
+			backgroundColor: `${this.state.buttonColor}`,
+			transition: "0.2s"
+		};
 
 		return !this.props.userState.authed ? (
 			<LoginContainer>
-				{this.state.loginFailed && (
-					<Form.Error>Login Failed. Please try again later.</Form.Error>
-				)}
-				<h1>Social Media WIP</h1>
+				<h1>{Variables.ProjectName.toUpperCase()}</h1>
 
+				<Form.FieldLabel>Sign in with your <b>{Variables.ProjectName} Account</b></Form.FieldLabel>
 				<Form.InputField
 					maxLength={20}
 					value={this.state.username}
 					placeholder="Username"
 					onChange={this.handleUsernameInput.bind(this)}
 				/>
+
+
+				{this.state.loginFailed && (
+					<Form.Error>Login Failed. The provided credentials are invalid</Form.Error>
+				)}
+
 				<Form.FieldRow>
 					<Form.PasswordField
 						style={pwdStyle}
@@ -114,15 +130,16 @@ class LoginFormWrapper extends React.Component<
 						type={fieldType}
 						onChange={this.handlePasswordInput.bind(this)}
 					/>
+
 					<Form.HideSensitive
 						type="submit"
 						onClick={this.handlePasswordVisibility.bind(this)}
 					>
-						{this.state.showPwd ? "Hide" : "Show"}
+						{this.state.showPwd ? <Icon.Eye /> : <Icon.EyeSlash />}
 					</Form.HideSensitive>
-					<Icon.Eye />
+					
 				</Form.FieldRow>
-				<Form.ConfirmButton onClick={this.tryLogin.bind(this)}>
+				<Form.ConfirmButton style={buttonStyle} onClick={this.tryLogin.bind(this)} >
 					login
 				</Form.ConfirmButton>
 				<p>
@@ -140,10 +157,3 @@ export const LoginForm = () => (
 		{state => <LoginFormWrapper userState={state} />}
 	</UserContext.Consumer>
 );
-// <LoginContainer>
-//     <h1>Social Media WIP</h1>
-//     <InputField id="username" placeholder="Username"/>
-//     <InputField id="password" placeholder="Password" type="password" />
-//     <LoginButton>login</LoginButton>
-//     <LoginButton onClick={(e) => fetchData(e)}>Click For Data</LoginButton>
-// </LoginContainer>

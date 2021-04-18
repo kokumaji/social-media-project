@@ -9,6 +9,8 @@ import * as jwt from "jsonwebtoken";
 import { RH } from "./types";
 import { RequestDenied, UnauthorizedError } from "../api/exceptions/Exceptions";
 import cors from "cors";
+import * as UserRoutes from "./api/UserRoutes";
+import * as SelfRoutes from "./api/SelfRoutes";
 
 const corsOptions = {
 	origin: "http://localhost:3000",
@@ -30,8 +32,11 @@ export const registerRoutes = (server: KokuServer) => {
 	//     });
 	// });
 
-	app.get("/api/user", getUser(server));
-	app.get("/api/users", getUsers(server));
+	app.get('/user', getUser(server));
+
+    app.get("/api/user/:request", UserRoutes.handleRequest(server));
+    app.post("/api/@me/:param", authenticateCookie(server), SelfRoutes.handleRequest(server));
+
 };
 
 interface JsonPayload {
@@ -50,19 +55,27 @@ const authenticateJWT: RH = (server) => (
 		const token = authHeader.split(" ")[1];
 
 		jwt.verify(token, server.options.authSecret, (err, payload) => {
-			if (!payload || err)
-				return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
-
-			const jsonPayload = payload as JsonPayload;
-
-			if (jsonPayload.id != req.body.userid)
-				return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
-
+			if (!payload || err) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
 			next();
 		});
 	} else {
-		return res
-			.status(401)
-			.json(new UnauthorizedError("No Bearer Token provided"));
+		return res.status(401).json(new UnauthorizedError("No Bearer Token provided"));
+	}
+};
+
+const authenticateCookie: RH = (server) => (req: Request, res: Response, next: NextFunction) => {
+	const cookie = req.body.token;
+	console.log(req.body);
+
+	if (cookie) {
+		return res.status(200).json({ msg: 'OK' });
+		const token = cookie as string;
+
+		jwt.verify(token, server.options.authSecret, (err, payload) => {
+			if (!payload || err) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
+			next();
+		});
+	} else {
+		return res.status(401).json(new UnauthorizedError("No Bearer Token provided"));
 	}
 };
