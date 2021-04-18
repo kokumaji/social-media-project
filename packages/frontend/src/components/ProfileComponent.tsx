@@ -152,6 +152,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
 
     async componentDidMount() {
         const id = this.props.match.params.id;
+        console.log("component mount event");
         try {
             var user = await getUser(id);
 
@@ -170,6 +171,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
                 cardColor: getColorScheme(user.user.profile.cardScheme)
             }});
         } catch(err) {
+            console.log(err);
             this.setState({ notFound: true });
         }
 
@@ -202,7 +204,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
             posts[i] = (<Post author={this.state.userData} message='Hello World!'/>);
         }
     
-        return !this.state.notFound ? (
+        return (
             <Wrapper>
                 <CardWrapper>
                     <ProfileBanner style={bannerBg} />
@@ -234,7 +236,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
                     {posts.length > 0 ? posts : <><h2>No Posts Found.</h2><p>This user hasn't posted anything.</p></>}
                 </PostWrapper>
             </Wrapper>
-        ) : <NotFound />;
+        );
     }
 }
 

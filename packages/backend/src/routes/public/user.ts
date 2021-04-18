@@ -6,27 +6,21 @@ import { withinRange } from '../../api/Math';
 import * as jwt from "jsonwebtoken";
 
 export const getUser: RH = (server) => async (req, res) => {
-    if(!req.query.id && !req.query.name) return res.status(400).json({msg: 'Bad Request' });
+    console.log(`${req.query.id}`)
+    if(!req.query.id) return res.status(400).json({msg: 'Bad Request' });
 
     var userId =  req.query.id as string || '';
-    let username = req.query.name as string || '';
     
     var clientUser;
-    if(username.length > 1 && !req.query.id) {
-        clientUser = await ClientUser.findOne({ username })
-    } else if(userId.length > 1 && !req.query.name) {
-        clientUser = await ClientUser.findOne({ id: userId })
-    } else {
-        return res.status(400).json({ msg: 'Bad Request' });
-    }
+    clientUser = await ClientUser.findOne({ id: userId })
 
     if(!clientUser) {
-        return res.status(400).json({ msg: 'Bad Request' });
+        return res.status(400).json({ msg: `Bad Request, no user with id ${userId}` });
     } 
 
     const clientProfile = await User.findOne({username: clientUser.username }, { _id: 0 });
     if(!clientProfile) {
-        return res.status(400).json({ msg: 'Bad Request' });
+        return res.status(400).json({ msg: `Bad Request, no profile for id ${userId}` });
     }
 
     res.setHeader('Content-Type', 'application/json');

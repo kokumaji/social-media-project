@@ -32,7 +32,4 @@ export const routes: RouteConfig[] = [{
     component: () => <ProfilePage />,
     path: "/u/:id",
     key: "profile"
-},
-{
-    component: () => <NotFound />
 }];

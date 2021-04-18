@@ -5,6 +5,7 @@ import styled from "styled-components";
 import * as users from "../api/users";
 import { UserContext, UserStateProvider } from "../components/data/UserManager";
 import * as Form from "./forms/Account";
+import * as Icon from 'react-bootstrap-icons';
 
 const LoginContainer = styled.div`
     background-color: #384853;
@@ -93,6 +94,7 @@ class LoginFormWrapper extends React.Component<{ userState: UserStateProvider },
                     <Form.HideSensitive type='submit' onClick={this.handlePasswordVisibility.bind(this)}>
                         {this.state.showPwd ? 'Hide' : 'Show'}
                     </Form.HideSensitive>
+                    <Icon.Eye />
                 </Form.FieldRow>
                 <Form.ConfirmButton onClick={this.tryLogin.bind(this)}>login</Form.ConfirmButton>
                 <p>Don't have an account yet? <a href="/register">Sign up!</a></p>

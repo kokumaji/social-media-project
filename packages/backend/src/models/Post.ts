@@ -11,21 +11,21 @@ interface PostDocument extends Document {
     meta: {
         message: String,
         favoritesCount: Number,
-        comments: null
+        comments: Number
     }
 }
 
 const PostSchema = new Schema<PostDocument>({
     postId: String,
-    createdAt: Number,
+    createdAt: { type: Number, default: Date.now },
     author: {
         userId: String,
         username: String
     }, 
     meta: {
         message: String,
-        favoritesCount: Number,
-        comments: null
+        favoritesCount: { type: Number, default: 0 },
+        comments: { type: Number, default: 0 }
     } 
 });
 

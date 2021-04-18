@@ -6,16 +6,28 @@ import * as IdGen from "../../api/objects/Snowflake";
 import { ClientUser } from "../../models/ClientUser";
 import { RH } from "../types";
 
+import { RequestDenied } from "../../api/exceptions/Exceptions";
+
 export const register: RH = (server) => async (req, res) => {
-    // more secure to use body
+    
+    // We strictly want to work with JSON requests, so let's block urlencoded entirely
+    if(req.is('application/x-www-form-urlencoded')) 
+        return res.status(403).json(new RequestDenied("This Request is not allowed here."));
+    
+    const jsonBody = req.body;
+
     if (!req.body) {
-        return res.status(400).json({ msg: "Bad Request" });
+        return res.status(400).json({ msg: "Bad Request, Missing Parameters" });
     }
 
-    const { username, email, password } = req.body;
+    const username = req.param('username');
+    const email = req.param('email');
+    const password = req.param('password');
+
+    console.log(`${username} ${email} ${password}`)
 
     if (!username || !password) {
-        return res.status(400).json({ msg: "Bad Request" });
+        return res.status(400).json({ msg: "Bad Request, Missing username or password" });
     }
 
     const hashed = await bcrypt.hash(password, 10);
@@ -23,7 +35,7 @@ export const register: RH = (server) => async (req, res) => {
 
     // If user already exists
     if (await ClientUser.exists({ username })) {
-        return res.status(400).json({ msg: "Bad Request" });
+        return res.status(400).json({ msg: "Bad Request, user exists" });
     }
 
     const clientUser = new ClientUser({ username, email, password: hashed, id: IdGen.generate()})

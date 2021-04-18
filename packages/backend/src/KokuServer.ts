@@ -6,6 +6,7 @@ import { connect } from "mongoose";
 import morgan from "morgan";
 import { createLogger, format, transports } from "winston";
 import { registerRoutes } from "./routes";
+import { errorHandler } from "./api/exceptions/ExceptionHandler";
 
 // logging imports
 const { printf, combine, label, timestamp, colorize, simple } = format;
@@ -31,6 +32,7 @@ export class KokuServer {
      * Express app instance.
      */
     app = express();
+    
     logger = createLogger({
         transports: [new transports.Console()],
         format: combine(
@@ -44,7 +46,9 @@ export class KokuServer {
 
     constructor(readonly options: KokuServerSettings) {
         // this.connection = createConnection(this.options.databaseUri);
-        this.app.use(morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })).use(cors()).use(bodyParser.json());
+        this.app.use(cors());
+        this.app.use(morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } }));
+        this.app.use(express.json());
     }
 
     /**
@@ -62,7 +66,11 @@ export class KokuServer {
         this.logger.verbose("Registering routes...");
         registerRoutes(this);
 
+        // JSON Error Handler 
+        this.app.use(errorHandler);
+
         this.app.listen(this.options.port, 'localhost');
+        
         this.logger.info(`Listening on port ${this.options.port}`);
         
     }
