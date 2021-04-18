@@ -1,11 +1,11 @@
 import * as React from "react";
+import * as Icon from "react-bootstrap-icons";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 import * as users from "../api/users";
 import { UserContext, UserStateProvider } from "../components/data/UserManager";
 import * as Form from "./forms/Account";
-import * as Icon from "react-bootstrap-icons";
 
 const LoginContainer = styled.div`
 	background-color: #384853;
@@ -26,9 +26,7 @@ const LoginContainer = styled.div`
 	}
 
 	@media screen and (max-width: 800px) {
-		 {
-			width: 100vh;
-		}
+		width: 100vh;
 	}
 `;
 
@@ -40,7 +38,7 @@ class LoginFormWrapper extends React.Component<
 		username: "",
 		password: "",
 		loginFailed: false,
-		showPwd: false,
+		showPwd: false
 	};
 
 	/**
@@ -91,7 +89,7 @@ class LoginFormWrapper extends React.Component<
 			borderStyle: `${borderStyle}`,
 			borderColor: `${borderColor}`,
 			color: `${borderColor}`,
-			transition: "0.1s",
+			transition: "0.1s"
 		};
 
 		return !this.props.userState.authed ? (
@@ -139,7 +137,7 @@ class LoginFormWrapper extends React.Component<
 
 export const LoginForm = () => (
 	<UserContext.Consumer>
-		{(state) => <LoginFormWrapper userState={state} />}
+		{state => <LoginFormWrapper userState={state} />}
 	</UserContext.Consumer>
 );
 // <LoginContainer>
