@@ -31,13 +31,11 @@ const SignUpContainer = styled.div`
 	}
 
 	@media screen and (max-width: 800px) {
-		 {
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			padding: 1.5em;
-			/* height:200vh; */
-		}
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		padding: 1.5em;
+		/* height:200vh; */
 
 		> h1 {
 			margin-top: 1em;
@@ -74,7 +72,7 @@ class SignUpWrapper extends React.Component<
 		password: "",
 		passwordConfirm: "",
 		email: "",
-		emailConfirm: "",
+		emailConfirm: ""
 	};
 
 	private handleUsernameInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -209,6 +207,6 @@ class SignUpWrapper extends React.Component<
 
 export const SignUpForm = () => (
 	<UserContext.Consumer>
-		{(state) => <SignUpWrapper userState={state} />}
+		{state => <SignUpWrapper userState={state} />}
 	</UserContext.Consumer>
 );
