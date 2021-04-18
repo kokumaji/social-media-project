@@ -3,7 +3,7 @@ import { Document, model, Schema } from "mongoose";
 interface ClientUserDocument extends Document {
 	id: string;
 	email: string;
-	createdAt: Number;
+	createdAt: number;
 	password: string;
 	username: string;
 }

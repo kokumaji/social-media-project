@@ -51,6 +51,6 @@ export const register: RH = (server) => async (req, res) => {
 	});
 	await clientUser.save();
 
-	var token = jwt.sign({ id: clientUser.id }, server.options.authSecret);
+	const token = jwt.sign({ id: clientUser.id }, server.options.authSecret);
 	return res.status(200).send({ auth: true, token: token });
 };

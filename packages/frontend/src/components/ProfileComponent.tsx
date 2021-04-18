@@ -155,7 +155,7 @@ class ProfileComponent extends React.Component<
 		const id = this.props.match.params.id;
 		console.log("component mount event");
 		try {
-			var user = await getUser(id);
+			const user = await getUser(id);
 
 			console.log(user);
 
@@ -180,28 +180,28 @@ class ProfileComponent extends React.Component<
 	}
 
 	render() {
-		var bannerBg = {
+		const bannerBg = {
 			backgroundColor: this.state.userData.cardColor.cardBannerBg,
 			backgroundImage: `url(${this.state.userData.bannerImg})`,
 			backgroundRepeat: "no-repeat",
 			backgroundSize: "cover",
 		};
 
-		var userNameColor = {
+		const userNameColor = {
 			color: this.state.userData.cardColor.cardUserText,
 		};
 
-		var style = {
+		const style = {
 			backgroundColor: this.state.userData.cardColor.cardBackground,
 			borderColor: this.state.userData.cardColor.cardBackground,
 			color: this.state.userData.cardColor.cardText,
 		};
 
-		var numberOfPosts = 0;
+		const numberOfPosts = 0;
 
-		var posts = [];
+		const posts = [];
 
-		for (var i = 0; i < numberOfPosts; i++) {
+		for (let i = 0; i < numberOfPosts; i++) {
 			posts[i] = <Post author={this.state.userData} message="Hello World!" />;
 		}
 

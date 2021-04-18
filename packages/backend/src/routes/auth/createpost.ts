@@ -10,7 +10,7 @@ interface PostJSON {
 }
 
 export const createPost: RH = (server) => async (req, res) => {
-	let json: PostJSON = req.body;
+	const json: PostJSON = req.body;
 
 	console.log(json.userid);
 	console.log(json.content);
@@ -18,7 +18,7 @@ export const createPost: RH = (server) => async (req, res) => {
 	if (!json.content) {
 		return res.status(400).json({ msg: "Bad Request, Missing Content" });
 	} else {
-		var clientObj;
+		let clientObj;
 		clientObj = await ClientUser.findOne({ id: json.userid });
 		if (!clientObj)
 			return res.status(400).json({ msg: "Bad Request, Invalid User ID" });

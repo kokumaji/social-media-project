@@ -1,14 +1,14 @@
 import { Document, model, Schema } from "mongoose";
 
 interface CommentDocument extends Document {
-	commentId: String;
+	commentId: string;
 	author: {
-		userId: String;
-		username: String;
+		userId: string;
+		username: string;
 	};
 	meta: {
-		message: String;
-		likes: Number;
+		message: string;
+		likes: number;
 	};
 }
 

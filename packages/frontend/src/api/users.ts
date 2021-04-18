@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getUser = async (id: string) => {
-	var url = `http://localhost:3000/api/api/user?id=${id}`;
+	let url = `http://localhost:3000/api/api/user?id=${id}`;
 	if (isNaN(Number(id))) url = `http://localhost:3000/api/api/user?name=${id}`;
 
 	return await axios.get(url).then(async (response) => {

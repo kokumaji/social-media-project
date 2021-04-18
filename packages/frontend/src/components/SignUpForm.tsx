@@ -104,10 +104,10 @@ class SignUpWrapper extends React.Component<
 	}
 
 	private validatePassword() {
-		var regexStrong = new RegExp(
+		const regexStrong = new RegExp(
 			"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
 		);
-		var regexMedium = new RegExp(
+		const regexMedium = new RegExp(
 			"^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
 		);
 
@@ -147,7 +147,7 @@ class SignUpWrapper extends React.Component<
 				return;
 			}
 
-			let res = await this.props.userState.register(
+			const res = await this.props.userState.register(
 				this.state.username,
 				this.state.email,
 				this.state.password

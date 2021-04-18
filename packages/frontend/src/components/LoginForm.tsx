@@ -71,7 +71,7 @@ class LoginFormWrapper extends React.Component<
 	private async tryLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		e.preventDefault();
 		try {
-			let successful = await this.props.userState.authenticate(
+			const successful = await this.props.userState.authenticate(
 				this.state.username,
 				this.state.password
 			);

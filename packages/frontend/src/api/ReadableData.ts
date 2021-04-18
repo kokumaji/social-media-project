@@ -26,7 +26,7 @@ export const getReadableCount = (number: number) => {
 };
 
 export const getReadableDifference = (oldDate: number) => {
-	var delta = Math.abs(Date.now() - oldDate) / 1000;
+	const delta = Math.abs(Date.now() - oldDate) / 1000;
 	console.log(delta);
 
 	if (delta > 31536000)

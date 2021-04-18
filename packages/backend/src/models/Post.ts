@@ -2,16 +2,16 @@ import { Document, model, Schema } from "mongoose";
 import { Comment } from "./Comment";
 
 interface PostDocument extends Document {
-	postId: String;
-	createdAt: Number;
+	postId: string;
+	createdAt: number;
 	author: {
-		userId: String;
-		username: String;
+		userId: string;
+		username: string;
 	};
 	meta: {
-		message: String;
-		favoritesCount: Number;
-		comments: Number;
+		message: string;
+		favoritesCount: number;
+		comments: number;
 	};
 }
 

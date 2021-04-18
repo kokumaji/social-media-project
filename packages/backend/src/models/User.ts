@@ -1,16 +1,16 @@
 import { Document, model, Schema } from "mongoose";
 
 interface UserDocument extends Document {
-	username: String;
-	fullname: String;
-	age: Number;
-	location: String;
-	gender: String;
+	username: string;
+	fullname: string;
+	age: number;
+	location: string;
+	gender: string;
 	profile: {
-		imageUrl: String;
-		description: String;
-		bannerUrl: String;
-		cardScheme: String;
+		imageUrl: string;
+		description: string;
+		bannerUrl: string;
+		cardScheme: string;
 	};
 }
 

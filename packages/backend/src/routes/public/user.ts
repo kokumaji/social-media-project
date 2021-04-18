@@ -9,9 +9,9 @@ export const getUser: RH = (server) => async (req, res) => {
 	console.log(`${req.query.id}`);
 	if (!req.query.id) return res.status(400).json({ msg: "Bad Request" });
 
-	var userId = (req.query.id as string) || "";
+	const userId = (req.query.id as string) || "";
 
-	var clientUser;
+	let clientUser;
 	clientUser = await ClientUser.findOne({ id: userId });
 
 	if (!clientUser) {
@@ -47,7 +47,7 @@ export const getUser: RH = (server) => async (req, res) => {
 export const getUsers: RH = (server) => async (req, res) => {
 	if (req.query.limit && isNaN(Number(req.query.limit)))
 		return res.status(400).json({ msg: "Bad Request" });
-	var limitRequest =
+	const limitRequest =
 		req.query.limit && withinRange(Number(req.query.limit), 0, 10)
 			? req.query.limit
 			: 10;
@@ -62,7 +62,7 @@ export const getUsers: RH = (server) => async (req, res) => {
 
 export const validateToken: RH = (server) => async (req, res) => {
 	if (!req.query.token) res.status(403).json({ msg: "No token provided." });
-	var token = req.query.token as string;
+	const token = req.query.token as string;
 
 	jwt.verify(token, server.options.authSecret, function (err, decoded) {
 		if (err)
