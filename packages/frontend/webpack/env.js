@@ -1,3 +1,3 @@
 module.exports = {
-	MY_SECRET: "uwu",
+	MY_SECRET: "uwu"
 };

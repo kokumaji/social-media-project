@@ -10,26 +10,25 @@ const developmentConfig = {
 	devtool: "eval-source-map",
 
 	output: {
-		publicPath: "/",
+		publicPath: "/"
 	},
 
 	entry: [
 		"react-hot-loader/patch", // activate HMR for React
-		"./index.tsx", // the entry point of our app
+		"./index.tsx" // the entry point of our app
 	],
 
 	devServer: {
 		historyApiFallback: true,
 		port: 3000,
-		hot: true,
+		hot: true
 	},
 
 	plugins: [
-		new webpack.NamedModulesPlugin(),
 		// Change this to true to automatically open the analyzer.
 		new BundleAnalyzerPlugin({ openAnalyzer: false }),
-		new webpack.HotModuleReplacementPlugin(),
-	],
+		new webpack.HotModuleReplacementPlugin()
+	]
 };
 
 module.exports = merge.smart(sharedWebpackConfig, developmentConfig);
