@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
-import { darkTheme } from './colorScheme/main';
+import { createGlobalStyle } from "styled-components";
+import { darkTheme } from "./colorScheme/main";
 
 export const GlobalStyles = createGlobalStyle`
 

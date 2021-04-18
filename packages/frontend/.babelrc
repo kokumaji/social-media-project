@@ -1,24 +1,24 @@
 {
-  "presets": [
-    "@babel/preset-typescript",
-    [
-      "@babel/preset-env",
-      {
-        "exclude": [
-          "babel-plugin-transform-regenerator",
-          "babel-plugin-transform-classes"
-        ]
-      }
-    ],
-    "@babel/preset-react"
-  ],
-  "plugins": [
-    "react-hot-loader/babel",
-    "@babel/plugin-transform-classes",
-    "@babel/plugin-transform-runtime",
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-object-rest-spread",
-    "@babel/plugin-proposal-optional-chaining",
-    "babel-plugin-styled-components"
-  ]
+	"presets": [
+		"@babel/preset-typescript",
+		[
+			"@babel/preset-env",
+			{
+				"exclude": [
+					"babel-plugin-transform-regenerator",
+					"babel-plugin-transform-classes"
+				]
+			}
+		],
+		"@babel/preset-react"
+	],
+	"plugins": [
+		"react-hot-loader/babel",
+		"@babel/plugin-transform-classes",
+		"@babel/plugin-transform-runtime",
+		"@babel/plugin-proposal-class-properties",
+		"@babel/plugin-proposal-object-rest-spread",
+		"@babel/plugin-proposal-optional-chaining",
+		"babel-plugin-styled-components"
+	]
 }

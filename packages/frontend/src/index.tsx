@@ -10,17 +10,17 @@ import { routes } from "./routes";
 import { darkTheme } from "./theme/colorScheme/main";
 import { GlobalStyles } from "./theme/global";
 
-const App = hot(() => 
-<BrowserRouter>
-    <Switch>
-        <ThemeProvider theme={darkTheme}>
-            <UserManager>
-                <GlobalStyles />
-                {renderRoutes(routes)}
-            </UserManager>
-        </ThemeProvider>
-    </Switch>
-</BrowserRouter>);
+const App = hot(() => (
+	<BrowserRouter>
+		<Switch>
+			<ThemeProvider theme={darkTheme}>
+				<UserManager>
+					<GlobalStyles />
+					{renderRoutes(routes)}
+				</UserManager>
+			</ThemeProvider>
+		</Switch>
+	</BrowserRouter>
+));
 
-ReactDOM.render(<App />, document.querySelector('#app-mount'));
-    
+ReactDOM.render(<App />, document.querySelector("#app-mount"));

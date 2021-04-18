@@ -10,9 +10,9 @@ console.log("made with 💜 by skye\n");
 dotenv.config();
 
 const server = new KokuServer({
-    databaseUri: process.env.DATABASE_URI || "",
-    port: Number(process.env.PORT) || 3000,
-    authSecret: process.env.AUTH_SECRET || ''
+	databaseUri: process.env.DATABASE_URI || "",
+	port: Number(process.env.PORT) || 3000,
+	authSecret: process.env.AUTH_SECRET || "",
 });
 
 server.logger.level = "debug";

@@ -9,38 +9,48 @@ import { RH } from "../types";
 import { RequestDenied } from "../../api/exceptions/Exceptions";
 
 export const register: RH = (server) => async (req, res) => {
-    
-    // We strictly want to work with JSON requests, so let's block urlencoded entirely
-    if(req.is('application/x-www-form-urlencoded')) 
-        return res.status(403).json(new RequestDenied("This Request is not allowed here."));
-    
-    const jsonBody = req.body;
+	// We strictly want to work with JSON requests, so let's block urlencoded entirely
+	if (req.is("application/x-www-form-urlencoded"))
+		return res
+			.status(403)
+			.json(new RequestDenied("This Request is not allowed here."));
 
-    if (!req.body) {
-        return res.status(400).json({ msg: "Bad Request, Missing Parameters" });
-    }
+	const jsonBody = req.body;
 
-    const username = req.param('username');
-    const email = req.param('email');
-    const password = req.param('password');
+	if (!req.body) {
+		return res.status(400).json({ msg: "Bad Request, Missing Parameters" });
+	}
 
-    console.log(`${username} ${email} ${password}`)
+	const username = req.param("username");
+	const email = req.param("email");
+	const password = req.param("password");
 
-    if (!username || !password) {
-        return res.status(400).json({ msg: "Bad Request, Missing username or password" });
-    }
+	console.log(`${username} ${email} ${password}`);
 
-    const hashed = await bcrypt.hash(password, 10);
-    server.logger.verbose(`Attempting to register user - username='${username}' hash=${hashed}`);
+	if (!username || !password) {
+		return res
+			.status(400)
+			.json({ msg: "Bad Request, Missing username or password" });
+	}
 
-    // If user already exists
-    if (await ClientUser.exists({ username })) {
-        return res.status(400).json({ msg: "Bad Request, user exists" });
-    }
+	const hashed = await bcrypt.hash(password, 10);
+	server.logger.verbose(
+		`Attempting to register user - username='${username}' hash=${hashed}`
+	);
 
-    const clientUser = new ClientUser({ username, email, password: hashed, id: IdGen.generate()})
-    await clientUser.save();
+	// If user already exists
+	if (await ClientUser.exists({ username })) {
+		return res.status(400).json({ msg: "Bad Request, user exists" });
+	}
 
-    var token = jwt.sign({ id: clientUser.id }, server.options.authSecret )
-    return res.status(200).send({ auth: true, token: token });
+	const clientUser = new ClientUser({
+		username,
+		email,
+		password: hashed,
+		id: IdGen.generate(),
+	});
+	await clientUser.save();
+
+	var token = jwt.sign({ id: clientUser.id }, server.options.authSecret);
+	return res.status(200).send({ auth: true, token: token });
 };
