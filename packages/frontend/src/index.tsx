@@ -7,7 +7,7 @@ import { ThemeProvider } from "styled-components";
 
 import { UserManager } from "./components/data/UserManager";
 import { routes } from "./routes";
-import { darkTheme } from "./theme/colorScheme/main";
+import { darkTheme } from "./theme/colorScheme/colors";
 import { GlobalStyles } from "./theme/global";
 
 const App = hot(() => (

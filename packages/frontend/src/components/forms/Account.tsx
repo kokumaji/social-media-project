@@ -1,11 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { darkTheme } from "../../theme/colorScheme/main";
+import { darkTheme } from "../../theme/colorScheme/colors";
 
 const fieldHeight = "3.5em";
 const fieldWidth = "80%";
-const fieldBorder = "border-radius:0.25em;border-style:none;";
 const fieldFont = "font-size: 0.85em;";
 const fieldFocus = ":focus { background-color: #4b4b4b; outline: none; }";
 
@@ -16,8 +15,8 @@ const fixPlaceholder = `
 `;
 
 export const InputField = styled.input`
-	${fieldBorder}
-	color:${darkTheme.text};
+	${darkTheme.textFields.border}
+	color:${darkTheme.main.textColor};
 	background-color: #2b2b2b;
 	width: ${fieldWidth};
 	height: ${fieldHeight};
@@ -38,9 +37,9 @@ export const Error = styled.label`
 `;
 
 export const ConfirmButton = styled.button`
-	${fieldBorder}
-	background-color:${darkTheme.body};
-	color: ${darkTheme.text};
+	${darkTheme.textFields.border}
+	background-color: ${darkTheme.main.bodyColor};
+	color: ${darkTheme.main.textColor};
 	text-transform: uppercase;
 	border-style: none;
 	width: ${fieldWidth};
@@ -56,8 +55,8 @@ export const ConfirmButton = styled.button`
 `;
 
 export const PasswordField = styled.input`
-	${fieldBorder}
-	color:${darkTheme.text};
+	${darkTheme.textFields.border}
+	color:${darkTheme.main.textColor};
 	background-color: #2b2b2b;
 	width: 100%;
 	height: ${fieldHeight};
@@ -97,7 +96,7 @@ export const HideSensitive = styled.button`
 	border: 0px; 
 	border-radius: 0px;
 	
-	border-left: 1px solid ${darkTheme.body};
+	border-left: 1px solid ${darkTheme.main.bodyColor};
 
 	cursor: pointer; 
 	color: white; 

@@ -35,7 +35,7 @@ export const registerRoutes = (server: KokuServer) => {
 	app.get('/user', getUser(server));
 
     app.get("/api/user/:request", UserRoutes.handleRequest(server));
-    app.post("/api/@me/:param", authenticateCookie(server), SelfRoutes.handleRequest(server));
+    app.post("/api/@me/:param", authenticateJWT(server), SelfRoutes.handleRequest(server));
 
 };
 
@@ -65,10 +65,8 @@ const authenticateJWT: RH = (server) => (
 
 const authenticateCookie: RH = (server) => (req: Request, res: Response, next: NextFunction) => {
 	const cookie = req.body.token;
-	console.log(req.body);
 
 	if (cookie) {
-		return res.status(200).json({ msg: 'OK' });
 		const token = cookie as string;
 
 		jwt.verify(token, server.options.authSecret, (err, payload) => {
