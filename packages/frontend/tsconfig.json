@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"lib": ["dom", "dom.iterable"],
-		"jsx": "preserve",
+		"jsx": "preserve"
 	},
 	"extends": "../../tsconfig.json",
 	"include": ["src/**/*.*"],

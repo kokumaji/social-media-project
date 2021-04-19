@@ -5,8 +5,8 @@ import { Footer } from "../components/Footer";
 import { LoginForm } from "../components/LoginForm";
 
 export const LoginPage = () => (
-    <>
-        <LoginForm />
-        <Footer />      
-    </>
+	<>
+		<LoginForm />
+		<Footer />
+	</>
 );

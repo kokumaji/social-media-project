@@ -1,11 +1,12 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import * as React from "react";
+import styled from "styled-components";
 
-import { darkTheme } from "../../theme/colorScheme/main";
+import { darkTheme } from "../../theme/colorScheme/colors";
 
-const fieldHeight = '4em';
-const fieldWidth = '80%';
-const fieldBorder = "border-radius:1em;border-style:none;";
+const fieldHeight = "3.5em";
+const fieldWidth = "80%";
+const fieldFont = "font-size: 0.85em;";
+const fieldFocus = ":focus { background-color: #4b4b4b; outline: none; }";
 
 const fixPlaceholder = `
     ::placeholder {
@@ -14,86 +15,94 @@ const fixPlaceholder = `
 `;
 
 export const InputField = styled.input`
-    ${fieldBorder}
-    color:${darkTheme.text};
-    background-color:#4f6675;
-    width: ${fieldWidth};
-    height: ${fieldHeight};
-    padding: 1em;
-    margin: 1.75em;
+	${darkTheme.textFields.border}
+	color:${darkTheme.main.textColor};
+	background-color: #2b2b2b;
+	width: ${fieldWidth};
+	height: ${fieldHeight};
+	padding: 1em;
+	margin: 1.5em;
+	${fieldFont}
 
-    ${fixPlaceholder}
-`;  
+	${fixPlaceholder}
 
-export const Error = styled.div`
-    position: absolute;
-    height: 3em;
-    width: 90%;
-    background-color: #ffb5b5;
-    color: #ff3d3d;
-    border-radius: 0.35em;
-    padding: 1em;
-    top: 10px;
-    border-style: solid;
-    border-width: 1px;
+	${fieldFocus}
+`;
+
+export const Error = styled.label`
+	margin-bottom: 0.5em;
+	display: block;
+	font-size: 0.75em;
+	color: red;
 `;
 
 export const ConfirmButton = styled.button`
-    ${fieldBorder}
-    background-color:${darkTheme.body};
-    color:${darkTheme.text};
-    text-transform:uppercase;
-    border-style:none;
-    width: ${fieldWidth};
-    height: ${fieldHeight};
-    margin-top:1em;
-    letter-spacing:0.25em;
-    cursor:pointer;
+	${darkTheme.textFields.border}
+	background-color: ${darkTheme.main.bodyColor};
+	color: ${darkTheme.main.textColor};
+	text-transform: uppercase;
+	border-style: none;
+	width: ${fieldWidth};
+	height: ${fieldHeight};
+	margin-top: 1em;
+	letter-spacing: 0.25em;
+	cursor: pointer;
 
-    :hover {
-        background-color:#2c3f4d;
-        transition: 0.2s;
-    }
+	:hover {
+		background-color: #2c3f4d;
+		transition: 0.2s;
+	}
 `;
 
 export const PasswordField = styled.input`
-    ${fieldBorder}
-    color:${darkTheme.text};
-    background-color:#4f6675;
-    width: 100%;
-    height: ${fieldHeight};
-    padding: 1em;
-    margin: 0px;
+	${darkTheme.textFields.border}
+	color:${darkTheme.main.textColor};
+	background-color: #2b2b2b;
+	width: 100%;
+	height: ${fieldHeight};
+	padding: 1em;
+	margin: 0px;
+	${fieldFont}
 
-    ${fixPlaceholder}
+	${fixPlaceholder}
+
+	${fieldFocus}
 `;
 
 export const FieldRow = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    position: relative;
+	display: flex;
+	flex-direction: row;
+	width: 80%;
+	position: relative;
 
-    input {
-        margin: 0;
-        margin-bottom: 1.75em;
-    }
+	input {
+		margin: 0;
+		margin-bottom: 1.75em;
+	}
+`;
+
+export const FieldLabel = styled.label`
+	margin-top: 1.75em;
 `;
 
 export const Spacer = styled.span`
-    height: 100%;
-    width: 1em;
+	height: 100%;
+	width: 1em;
 `;
 
 export const HideSensitive = styled.button`
-    min-width:20%;
-    position: absolute; 
-    border-radius: 5px;
-    z-index: 2; 
-    border: none; 
-    cursor: pointer; 
-    color: white; 
-    background-color: rgba(0,0,0,0); 
-    right:0;
-    height:70%;
+	position: absolute;
+
+	border: 0px; 
+	border-radius: 0px;
+	
+	border-left: 1px solid ${darkTheme.main.bodyColor};
+
+	cursor: pointer; 
+	color: white; 
+	background-color: rgba(0,0,0,0); 
+	
+	top: 20%;
+	right: 8px;
+	z-index: 2; 
 `;

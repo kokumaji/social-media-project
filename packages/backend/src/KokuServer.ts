@@ -12,67 +12,70 @@ import { errorHandler } from "./api/exceptions/ExceptionHandler";
 const { printf, combine, label, timestamp, colorize, simple } = format;
 
 const fmt = printf(({ level, message, label, timestamp }) => {
-    return `${chalk.gray(
-        timestamp
-    )} ${label.toLowerCase()}:${level} ${chalk.gray("→")} ${message}`;
+	return `${chalk.gray(timestamp)} ${label.toLowerCase()}:${level} ${chalk.gray(
+		"→"
+	)} ${message}`;
 });
 
 // Server settings
 interface KokuServerSettings {
-    databaseUri: string;
-    port: number;
-    authSecret: string;
+	databaseUri: string;
+	port: number;
+	authSecret: string;
 }
 
 /**
  * Represents a backend server instance.
  */
 export class KokuServer {
-    /**
-     * Express app instance.
-     */
-    app = express();
-    
-    logger = createLogger({
-        transports: [new transports.Console()],
-        format: combine(
-            label({ label: "koku" }),
-            timestamp(),
-            colorize(),
-            simple(),
-            fmt
-        ),
-    }); 
+	/**
+	 * Express app instance.
+	 */
+	app = express();
 
-    constructor(readonly options: KokuServerSettings) {
-        // this.connection = createConnection(this.options.databaseUri);
-        this.app.use(cors());
-        this.app.use(morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } }));
-        this.app.use(express.json());
-    }
+	logger = createLogger({
+		transports: [new transports.Console()],
+		format: combine(
+			label({ label: "koku" }),
+			timestamp(),
+			colorize(),
+			simple(),
+			fmt
+		),
+	});
 
-    /**
-     * Start the API server.
-     */
-    async start() {
-        // connect to mongoose
-        this.logger.verbose("Connecting to MongoDB...");
-        await connect(this.options.databaseUri, { useNewUrlParser: true, useUnifiedTopology: true }).catch((err) => {
-            console.error(err);
-            this.logger.error("Failed to connect to MongoDB");
-            process.exit();
-        });
+	constructor(readonly options: KokuServerSettings) {
+		// this.connection = createConnection(this.options.databaseUri);
+		this.app.use(cors());
+		this.app.use(
+			morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })
+		);
+		this.app.use(express.json());
+	}
 
-        this.logger.verbose("Registering routes...");
-        registerRoutes(this);
+	/**
+	 * Start the API server.
+	 */
+	async start() {
+		// connect to mongoose
+		this.logger.verbose("Connecting to MongoDB...");
+		await connect(this.options.databaseUri, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		}).catch((err) => {
+			console.error(err);
+			this.logger.error("Failed to connect to MongoDB");
+			process.exit();
+		});
 
-        // JSON Error Handler 
-        this.app.use(errorHandler);
+		this.logger.verbose("Registering routes...");
+		registerRoutes(this);
 
-        this.app.listen(this.options.port, 'localhost');
-        
-        this.logger.info(`Listening on port ${this.options.port}`);
-        
-    }
+		// JSON Error Handler
+		this.app.use(errorHandler);
 
+		this.app.listen(this.options.port, "localhost");
+
+		this.logger.info(`Listening on port ${this.options.port}`);
+	}
 }

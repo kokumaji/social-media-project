@@ -5,7 +5,7 @@ import { Footer } from "../components/Footer";
 import { ProfileWrapper } from "../components/ProfileComponent";
 
 export const ProfilePage = () => (
-    <>
-        <ProfileWrapper />  
-    </>
+	<>
+		<ProfileWrapper />
+	</>
 );

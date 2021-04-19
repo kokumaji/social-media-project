@@ -1,11 +1,11 @@
 declare module "flakeid" {
-    interface GeneratorOptions {
-        mid: number;
-        timeOffset: number;
-    }
+	interface GeneratorOptions {
+		mid: number;
+		timeOffset: number;
+	}
 
-    export default class FlakeId {
-        constructor(options?: Partial<GeneratorOptions>);
-        gen(): string;
-    }
+	export default class FlakeId {
+		constructor(options?: Partial<GeneratorOptions>);
+		gen(): string;
+	}
 }
