@@ -7,6 +7,8 @@ import { getMonthYear } from "../api/ReadableData";
 import { UserModel } from "./data/UserModel";
 import styled from "styled-components";
 
+import * as Profile from "./decoration/Profile";
+
 import { LoadingContainer } from "./decoration/Loading";
 
 import { darkTheme } from "../theme/colorScheme/colors";
@@ -102,7 +104,6 @@ class Container extends React.Component {
 
     async componentDidMount() {
         try {
-            await delay(1000);
             const userData = await getSelf(document.cookie);
             this.setState({
                 self: userData as UserModel
@@ -121,7 +122,7 @@ class Container extends React.Component {
         return (this.state.self.user.username != "" ? 
             <PostSection>
                                 <TextBox>
-            <p>Welcome Back, <b>@{`${this.state.self.user.username}`} 🥳</b></p>
+            <p>Welcome Back, <Profile.Mention user={this.state.self as UserModel} /> 🥳</p>
             <p><b>Did you know?</b> You joined KokuMedia in <b>{`${getMonthYear(new Date(this.state.self.createdAt))}`}</b></p></TextBox>
 
             </PostSection> : <LoadingContainer />);

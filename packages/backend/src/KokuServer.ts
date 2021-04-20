@@ -51,6 +51,7 @@ export class KokuServer {
 			morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })
 		);
 		this.app.use(express.json());
+		this.app.set('json spaces', 2);
 	}
 
 	/**

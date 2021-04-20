@@ -1,8 +1,8 @@
 import { CardScheme } from "../../types/Theme";
 
 export const getColorScheme = (name: string): CardScheme => {
-	if (name === "mintedGreen") {
-		return mintedGreen;
+	if (name === "forestGreen") {
+		return forestGreen;
 	} else if (name === "cottonCandy") {
 		return cottonCandy;
 	} else if (name === "freshPeach") {
@@ -27,7 +27,7 @@ export const defaultLight: CardScheme = {
 
 export const defaultDark: CardScheme = {
 	name: "Default Dark",
-	cardBackground: "#363f44",
+	cardBackground: "#373737",
 	cardBannerBg: "#9fa1a5",
 	cardText: "white",
 	cardUserText: "#9fa1a5",
@@ -35,11 +35,11 @@ export const defaultDark: CardScheme = {
 		"filter: invert(73%) sepia(2%) saturate(422%) hue-rotate(182deg) brightness(88%) contrast(90%);",
 };
 
-export const mintedGreen: CardScheme = {
+export const forestGreen: CardScheme = {
 	name: "Minted Green",
-	cardBackground: "#8fbbaf",
+	cardBackground: "#225045",
 	cardBannerBg: "#557d68",
-	cardText: "#557d68",
+	cardText: "#88d46c",
 	cardUserText: "#557d68",
 	cardActionColor:
 		"filter: invert(45%) sepia(37%) saturate(322%) hue-rotate(96deg) brightness(91%) contrast(82%);",

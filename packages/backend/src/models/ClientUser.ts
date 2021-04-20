@@ -6,6 +6,7 @@ interface ClientUserDocument extends Document {
 	createdAt: number;
 	password: string;
 	username: string;
+	clientToken: string;
 }
 
 const ClientUserSchema = new Schema<ClientUserDocument>({
@@ -14,6 +15,7 @@ const ClientUserSchema = new Schema<ClientUserDocument>({
 	createdAt: { type: Number, default: Date.now },
 	password: String,
 	username: String,
+	clientToken: String,
 });
 
 export const ClientUser = model<ClientUserDocument>(

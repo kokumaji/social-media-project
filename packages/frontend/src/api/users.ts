@@ -2,8 +2,7 @@ import axios from "axios";
 import { getApiToken } from "./CookieHelper";
 
 export const getUser = async (id: string) => {
-	let url = `http://localhost:3000/api/api/user?id=${id}`;
-	if (isNaN(Number(id))) url = `http://localhost:3000/api/api/user?name=${id}`;
+	let url = `http://localhost:3000/api/v1/user?id=${id}&with_meta=true`;
 
 	return await axios.get(url).then(async (response) => {
 		return response.data;
@@ -13,7 +12,7 @@ export const getUser = async (id: string) => {
 export const getSelf = async (token: string) => {
 	token = token.replace("apiToken=", "");
 
-	return await axios.post("http://localhost:3000/api/api/@me/debug", {  }, { headers: {
+	return await axios.post("http://localhost:3000/api/@me/debug", {  }, { headers: {
 		'Authorization' : `Bearer ${getApiToken(document.cookie)}`
 	} })
 	.then(async (response) => {

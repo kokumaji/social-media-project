@@ -6,6 +6,8 @@ import * as IdGen from "../../api/objects/Snowflake";
 import { ClientUser } from "../../models/ClientUser";
 import { RH } from "../types";
 
+import * as crypto from "crypto";
+
 import { RequestDenied } from "../../api/exceptions/Exceptions";
 import { User } from "../../models/User";
 
@@ -22,11 +24,9 @@ export const register: RH = (server) => async (req, res) => {
 		return res.status(400).json({ msg: "Bad Request, Missing Parameters" });
 	}
 
-	const username = req.param("username");
-	const email = req.param("email");
-	const password = req.param("password");
-
-	console.log(`${username} ${email} ${password}`);
+	const username = req.body.username;
+	const email = req.body.email;
+	const password = req.body.password;
 
 	if (!username || !password) {
 		return res
@@ -36,7 +36,7 @@ export const register: RH = (server) => async (req, res) => {
 
 	const hashed = await bcrypt.hash(password, 10);
 	server.logger.verbose(
-		`Attempting to register user - username='${username}' hash=${hashed}`
+		`Attempting to register user - username='${username}'`
 	);
 
 	// If user already exists
@@ -48,16 +48,17 @@ export const register: RH = (server) => async (req, res) => {
 		username,
 		email,
 		password: hashed,
-		id: IdGen.generate(),
+		id: IdGen.userId(),
+		clientToken: crypto.randomBytes(24).toString('hex')
 	});
 
-	/*
+	
 	const clientProfile = new User({
 		username,
 		fullname: username.toUpperCase(),
 		age: 19,
-		location: whatTheySelected,
-		gender: whatTheySelected,
+		location: "Germany",
+		gender: "Non-Binary",
 		profile: {
 			imageUrl: "null",
 			description: "null",
@@ -66,11 +67,15 @@ export const register: RH = (server) => async (req, res) => {
 		}
 	});
 	
-	await clientProfile.save();*/
+	await clientProfile.save();
 
 	await clientUser.save();
 
+	server.logger.verbose(
+		`Saved user to database`
+	);
+
 
 	const token = jwt.sign({ id: clientUser.id }, server.options.authSecret);
-	return res.status(200).send({ auth: true, token: token });
+	return res.status(200).send({ auth: true, token: token, consumerToken: clientUser.clientToken });
 };

@@ -36,4 +36,7 @@ export const handleRequest: RH = (server) => async (req: Request, res: Response,
             )
         );
     }
+
+    return res.status(400).json(new BadRequest("Missing Parameters"))
+
 }

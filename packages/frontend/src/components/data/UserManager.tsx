@@ -1,6 +1,8 @@
 import * as React from "react";
+import { getApiToken } from "../../api/CookieHelper";
 
 import * as users from "../../api/users";
+import { UserModel } from "./UserModel";
 
 interface UserState {
 	id: string;
@@ -12,11 +14,25 @@ export type UserStateProvider = UserState & {
 	register(username: string, email: string, password: string): Promise<boolean>;
 };
 
-export const UserContext = React.createContext<UserStateProvider>({
-	authed: false,
+const checkCookie = () => {
+	var cookie = getApiToken(document.cookie);
+
+	return cookie ? true : false;
+};
+
+export const UserContext = React.createContext<UserStateProvider> ({
+	authed: checkCookie(),
 	id: "",
 	authenticate: async () => false,
 	register: async () => false,
+});
+
+interface UserDataProvider {
+	user: UserModel | null
+}
+
+export const UserData = React.createContext<UserDataProvider>({
+	user: null
 });
 
 /**
@@ -28,7 +44,7 @@ export class UserManager extends React.Component<{}, UserState> {
 
 		this.state = {
 			id: "",
-			authed: false,
+			authed: checkCookie(),
 		};
 	}
 

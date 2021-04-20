@@ -160,16 +160,16 @@ class ProfileComponent extends React.Component<
 
 			this.setState({
 				userData: {
-					username: user.user.username,
-					fullname: user.user.fullname,
-					location: user.user.location,
-					description: user.user.profile.description,
-					gender: user.user.gender,
-					joined: new Date(user.createdAt),
-					profileImg: user.user.profile.imageUrl,
-					bannerImg: user.user.profile.bannerUrl,
-					cardScheme: user.user.profile.cardScheme,
-					cardColor: getColorScheme(user.user.profile.cardScheme),
+					username: user.data.user_name,
+					fullname: user.data.name,
+					location: user.meta.location,
+					description: user.meta.description,
+					gender: user.meta.gender,
+					joined: new Date(user.data.created_at),
+					profileImg: "",
+					bannerImg: "",
+					cardScheme: "",
+					cardColor: getColorScheme("")
 				},
 			});
 		} catch (err) {

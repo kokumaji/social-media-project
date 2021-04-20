@@ -72,6 +72,20 @@ class LoginFormWrapper extends React.Component<
 		this.setState({ showPwd: !this.state.showPwd });
 	}
 
+	private async handleEnterKey(e: React.KeyboardEvent<HTMLInputElement>) {
+		if(e.key != "Enter") return;
+		
+		try {
+			const successful = await this.props.userState.authenticate(
+				this.state.username,
+				this.state.password
+			);
+			this.setState({ loginFailed: !successful });
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	/**
 	 * Attempt a user login by authenticating with the API.
 	 */
@@ -106,6 +120,7 @@ class LoginFormWrapper extends React.Component<
 
 		return !this.props.userState.authed ? (
 			<LoginContainer>
+				{console.log(this.props.userState.authed)}
 				<h1>{Variables.ProjectName.toUpperCase()}</h1>
 
 				<Form.FieldLabel>Sign in with your <b>{Variables.ProjectName} Account</b></Form.FieldLabel>
@@ -129,6 +144,7 @@ class LoginFormWrapper extends React.Component<
 						placeholder="Password"
 						type={fieldType}
 						onChange={this.handlePasswordInput.bind(this)}
+						onKeyDown={this.handleEnterKey.bind(this)}
 					/>
 
 					<Form.HideSensitive
