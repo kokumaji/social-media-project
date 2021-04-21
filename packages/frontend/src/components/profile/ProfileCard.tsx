@@ -5,6 +5,10 @@ import { UserData } from "../data/UserManager";
 import { UserModel } from "../data/UserModel";
 
 import { getColorScheme } from "../../theme/colorScheme/profileCards";
+import { RoleBadge } from "../decoration/Labels";
+import { UserRole } from "../../api/models/user/UserRoles";
+import { NameComponent } from "./AccountName";
+import UserObject from "../../api/models/user/UserObject";
 
 const MentionableContainer = styled.div`
     display: inline;
@@ -37,8 +41,8 @@ const ProfileCard = styled.div`
     cursor: default; 
     position: absolute;
     height: 8em;
-    width: 18em;
-    margin: -10em 0 0 6.5em;
+    width: 18.5em;
+    margin: -10em 0 0 6.25em;
     background-color: ${darkTheme.textFields.fieldColor};
     opacity: 0;
 
@@ -71,10 +75,6 @@ const NameContainer = styled.div`
 
 `;
 
-const UsernameLabel = styled.label`
-    font-size: 0.85em;
-`;
-
 const DescriptionField = styled.div`
     top: 0;
     text-align: left;
@@ -101,62 +101,32 @@ const ProfileImage = styled.div`
     background-color: white;
 `;
 
-const AccountName = styled.div`
-    margin-left: 5.5em;
-    margin-top: 2.25em;
-
-    > span {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-`;
-
-const AdminLabel = styled.label`
-    background-color: white;
-    color: black;
-
-    display: inline !important;
-    height: 10px;
-
-    font-size: 0.75em;
-
-    ${darkTheme.textFields.border}
-`;
-
-export class Mention extends React.Component< { user: UserModel }> {
+export class Mention extends React.Component< { user: UserObject }> {
 
     state = {
-        cardColor: getColorScheme(this.props.user.user.profile.cardScheme),
-        role: "ADMIN"
+        cardColor: this.props.user.theme.colorScheme,
     }
  
     render() {
 
         const cardStyle = {
-            backgroundColor: this.state.cardColor.cardBackground,
-			borderColor: this.state.cardColor.cardBackground,
-			color: this.state.cardColor.cardText
+            backgroundColor: this.state.cardColor?.cardBackground,
+			borderColor: this.state.cardColor?.cardBackground,
+			color: this.state.cardColor?.cardText
         }
 
         console.log(cardStyle);
 
         return (
         <MentionableContainer>
-            <ProfileLink href={`http://localhost:3000/u/${this.props.user.id}`}>@{this.props.user.user.username}</ProfileLink>
+            <ProfileLink href={`http://localhost:3000/u/${this.props.user.data.id}`}>@{this.props.user.data.user_name}</ProfileLink>
             <ProfileCard>
                 <NameContainer style={cardStyle}>
                     <ProfileImage />
-
-                    <AccountName>
-                        <span><h3>{this.props.user.user.fullname}</h3> <AdminLabel>Admin</AdminLabel></span>
-                        <UsernameLabel>@{this.props.user.user.username}</UsernameLabel>
-                    </AccountName>
-                    
+                    <NameComponent user={this.props.user} />
                 </NameContainer>
                 <DescriptionField>
-                    <label>{this.props.user.user.profile.description}</label>
+                    <label>{this.props.user.meta.description}</label>
                 </DescriptionField>
             </ProfileCard>
         </MentionableContainer>);

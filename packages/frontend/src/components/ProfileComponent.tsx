@@ -156,8 +156,6 @@ class ProfileComponent extends React.Component<
 		try {
 			const user = await getUser(id);
 
-			console.log(user);
-
 			this.setState({
 				userData: {
 					username: user.data.user_name,

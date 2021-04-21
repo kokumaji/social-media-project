@@ -19,7 +19,7 @@ export const handleRequest: RH = (server) => async (req: Request, res: Response,
 
         const requestedUser = await User.fromID(id as string, { with_meta: withMeta, with_posts: withPosts });
 
-        if(!requestedUser) return res.status(404).json(new NotFound("Requested User does not exist"))
+        if(!requestedUser) return res.status(404).json(new NotFound("Requested User does not exist"));
 
         return res.status(200).json(requestedUser);
     }

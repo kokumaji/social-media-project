@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getApiToken } from "./CookieHelper";
+import UserObject from "./models/user/UserObject";
 
 export const getUser = async (id: string) => {
 	let url = `http://localhost:3000/api/v1/user?id=${id}&with_meta=true`;
@@ -16,7 +17,17 @@ export const getSelf = async (token: string) => {
 		'Authorization' : `Bearer ${getApiToken(document.cookie)}`
 	} })
 	.then(async (response) => {
-		return response.data;
+		return new UserObject({
+			id: response.data.data.user_id,
+			name: response.data.data.name,
+			user_name: response.data.data.user_name,
+			created_at: response.data.data.created_at,
+		}, {
+			gender: response.data.meta.gender,
+			location: response.data.meta.location,
+			description: response.data.meta.description,
+			status: response.data.meta.status,
+		})
 	});
 }
 

@@ -7,11 +7,14 @@ import { getMonthYear } from "../api/ReadableData";
 import { UserModel } from "./data/UserModel";
 import styled from "styled-components";
 
-import * as Profile from "./decoration/Profile";
+import * as Profile from "./profile/ProfileCard";
 
 import { LoadingContainer } from "./decoration/Loading";
 
 import { darkTheme } from "../theme/colorScheme/colors";
+import { RoleBadge, TestBadge } from "./decoration/Labels";
+import { UserRole } from "../api/models/user/UserRoles";
+import UserObject from "../api/models/user/UserObject";
 
 const fieldHeight = "8em";
 const fieldWidth = "100%";
@@ -82,21 +85,10 @@ function delay(ms: number) {
 class Container extends React.Component {
 
     state = {
-        self: {
-            id: "",
-            createdAt: new Date(0),
-            user: {
-                username: "",
-                fullname: "",
-                age: 0,
-                location: "",
-                gender: "",
-                profile: {
-                    imageUrl: "",
-                    description: "",
-                    bannerUrl: "",
-                    cardScheme: ""
-                }
+        self: { 
+            data: {
+                created_at: new Date(0),
+                user_name: ""
             }
         },
         hasError: false
@@ -106,7 +98,7 @@ class Container extends React.Component {
         try {
             const userData = await getSelf(document.cookie);
             this.setState({
-                self: userData as UserModel
+                self: userData as UserObject
             })
 
         } catch(err) {
@@ -119,12 +111,13 @@ class Container extends React.Component {
         if(this.state.hasError) {
             return (<TextBox><h1>:(</h1><p>Something went wrong!</p></TextBox>);
         }
-        return (this.state.self.user.username != "" ? 
+        return (this.state.self.data.user_name != "" ? 
             <PostSection>
-                                <TextBox>
-            <p>Welcome Back, <Profile.Mention user={this.state.self as UserModel} /> 🥳</p>
-            <p><b>Did you know?</b> You joined KokuMedia in <b>{`${getMonthYear(new Date(this.state.self.createdAt))}`}</b></p></TextBox>
-
+            <TextBox>
+            <p>Welcome Back, <Profile.Mention user={this.state.self as UserObject} /> 🥳</p>
+            <p><b>Did you know?</b> You joined KokuMedia in <b>{`${getMonthYear(new Date(this.state.self.data.created_at))}`}</b></p>
+            </TextBox>
+            <RoleBadge role={UserRole.OWNER} />
             </PostSection> : <LoadingContainer />);
     }
 }
