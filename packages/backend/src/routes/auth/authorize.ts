@@ -38,7 +38,7 @@ export const authorize: RH = (server) => async (req, res) => {
 
 	const accessToken = jwt.sign(
 		{ id: clientUser.id },
-		server.options.authSecret
+		server.options.authSecret as string
 	);
 	return res
 		.cookie("apiToken", accessToken, { maxAge: 3600000, sameSite: "lax" })

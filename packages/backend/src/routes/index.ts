@@ -129,7 +129,7 @@ const authenticateJWT: RH = (server) => async (req: Request, res: Response, next
 	if (authHeader) {
 		const token = authHeader.split(" ")[1];
 
-		jwt.verify(token, server.options.authSecret, async (err, payload) => {
+		jwt.verify(token, server.options.authSecret as string, async (err, payload) => {
 			if (!payload || err) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
 			const tokenContent = payload as AuthToken;
 
@@ -151,7 +151,7 @@ const authenticateCookie: RH = (server) => (req: Request, res: Response, next: N
 	if (cookie) {
 		const token = cookie as string;
 
-		jwt.verify(token, server.options.authSecret, (err, payload) => {
+		jwt.verify(token, server.options.authSecret as string, (err, payload) => {
 			if (!payload || err) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
 			next();
 		});

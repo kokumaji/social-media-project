@@ -8,50 +8,19 @@ import { createLogger, format, transports } from "winston";
 import { registerRoutes } from "./routes";
 import { errorHandler } from "./api/exceptions/ExceptionHandler";
 
-// logging imports
-const { printf, combine, label, timestamp, colorize, simple } = format;
-
-const fmt = printf(({ level, message, label, timestamp }) => {
-	return `${chalk.gray(timestamp)} ${label.toLowerCase()}:${level} ${chalk.gray(
-		"→"
-	)} ${message}`;
-});
-
-// Server settings
-interface KokuServerSettings {
-	databaseUri: string;
-	port: number;
-	authSecret: string;
-}
+import { BackendServer, ServerConfiguration } from "@koku-app/lib_backend";
 
 /**
  * Represents a backend server instance.
  */
-export class KokuServer {
-	/**
-	 * Express app instance.
-	 */
-	app = express();
+export class KokuServer extends BackendServer {
 
-	logger = createLogger({
-		transports: [new transports.Console()],
-		format: combine(
-			label({ label: "koku" }),
-			timestamp(),
-			colorize(),
-			simple(),
-			fmt
-		),
-	});
+	constructor(options: ServerConfiguration) {
+		super(options);
 
-	constructor(readonly options: KokuServerSettings) {
-		// this.connection = createConnection(this.options.databaseUri);
-		this.app.use(cors());
 		this.app.use(
 			morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })
 		);
-		this.app.use(express.json());
-		this.app.set('json spaces', 2);
 	}
 
 	/**
@@ -60,7 +29,7 @@ export class KokuServer {
 	async start() {
 		// connect to mongoose
 		this.logger.verbose("Connecting to MongoDB...");
-		await connect(this.options.databaseUri, {
+		await connect(this.options.mongoDB, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		}).catch((err) => {
@@ -75,8 +44,8 @@ export class KokuServer {
 		// JSON Error Handler
 		this.app.use(errorHandler);
 
-		this.app.listen(this.options.port, "localhost");
+		this.app.listen(this.options.server_port, "localhost");
 
-		this.logger.info(`Listening on port ${this.options.port}`);
+		this.logger.info(`Listening on port ${this.options.server_port}`);
 	}
 }
