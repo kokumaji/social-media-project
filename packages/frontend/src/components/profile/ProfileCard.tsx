@@ -69,6 +69,10 @@ const NameContainer = styled.div`
     text-align: left;
     background-color: #373737;
 
+    display: flex;
+    flex-direction: row;
+	align-items: center;
+
     flex: 1 0 50%;
 
     ${darkTheme.textFields.border}
@@ -97,14 +101,13 @@ const ProfileImage = styled.div`
 
     margin-left: 0.75em;
     margin-top: 0.75em;
-
-    background-color: white;
 `;
 
 export class Mention extends React.Component< { user: UserObject }> {
 
     state = {
         cardColor: this.props.user.theme.colorScheme,
+        imgUrl: `http://localhost:8000/profile_pictures/${this.props.user.data.id}`
     }
  
     render() {
@@ -115,14 +118,18 @@ export class Mention extends React.Component< { user: UserObject }> {
 			color: this.state.cardColor?.cardText
         }
 
-        console.log(cardStyle);
+        const withImage = {
+            backgroundImage: `url(${this.state.imgUrl})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat"
+        };
 
         return (
         <MentionableContainer>
             <ProfileLink href={`http://localhost:3000/u/${this.props.user.data.id}`}>@{this.props.user.data.user_name}</ProfileLink>
             <ProfileCard>
                 <NameContainer style={cardStyle}>
-                    <ProfileImage />
+                    <ProfileImage style={withImage} />
                     <NameComponent user={this.props.user} />
                 </NameContainer>
                 <DescriptionField>

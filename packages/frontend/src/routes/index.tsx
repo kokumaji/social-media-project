@@ -1,6 +1,6 @@
 import * as React from "react";
 import { RouteConfig } from "react-router-config";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { HomePage } from "../views/Home";
 
 import { LoginPage } from "../views/Login";
@@ -37,5 +37,15 @@ export const routes: RouteConfig[] = [
 		component: () => <ProfilePage />,
 		path: "/u/:id",
 		key: "profile",
+	},
+	{
+		component: () => <NotFound />,
+		path: "/404",
+		key: "not-found",
+	},
+	{
+		component: () => <Redirect to="/404" />,
+		path: "*",
+		key: "not-found",
 	},
 ];

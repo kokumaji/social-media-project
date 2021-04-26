@@ -1,6 +1,7 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "styled-components";
+import UserObject from "../../api/models/user/UserObject";
 
 import * as formatter from "../../api/ReadableData";
 import { getUser } from "../../api/users";
@@ -104,7 +105,7 @@ const Timestamp = styled.div`
 	text-align: center;
 `;
 
-export class Post extends React.Component<{ author: User; message: string }> {
+export class Post extends React.Component<{ author: UserObject; message: string }> {
 	render() {
 		return (
 			<PostContainer>
@@ -113,21 +114,21 @@ export class Post extends React.Component<{ author: User; message: string }> {
 						<ImageContainer>
 							<img
 								src={
-									this.props.author.profileImg === null
+									this.props.author.media.profile_picture_url === null
 										? "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
-										: this.props.author.profileImg
+										: this.props.author.media.profile_picture_url
 								}
 							/>
 						</ImageContainer>
 						<UserInfo>
 							<h2>
 								<a
-									href={`http://localhost:3000/u/${this.props.author.username}`}
+									href={`http://localhost:3000/u/${this.props.author.data.user_name}`}
 								>
-									{this.props.author.fullname}
+									{this.props.author.data.name}
 								</a>
 							</h2>
-							<p>@{this.props.author.username}</p>
+							<p>@{this.props.author.data.user_name}</p>
 						</UserInfo>
 					</PostAuthor>
 					<Timestamp>

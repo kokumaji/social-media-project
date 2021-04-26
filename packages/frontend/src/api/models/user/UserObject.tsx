@@ -69,5 +69,8 @@ export default class UserObject {
         this.media = {...defaultMedia, ...userMedia};
         this.theme = {...defaultTheme, ...userTheme};
     }
-
 }
+
+export const defaultUser = new UserObject({
+    
+});

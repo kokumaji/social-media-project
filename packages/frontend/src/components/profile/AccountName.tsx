@@ -6,13 +6,13 @@ import { UserModel } from "../data/UserModel";
 import { RoleBadge } from "../decoration/Labels";
 
 const Wrapper = styled.div`
-    margin-left: 5.5em;
-    margin-top: 1.25em;
 
     display: flex;
     flex-direction: column;
 
-    height: 1em;
+	margin-left: 1em;
+
+    height: 3em;
 
     > span {
         display: flex;
@@ -38,12 +38,8 @@ const BadgeContainer = styled.div`
 
 export class NameComponent extends React.Component<{ user: UserObject }> {
 
-    state = {
-        role: ""
-    };
-
     render() {
-        const userRole = this.props.user.data.role ? this.props.user.data.role : "";
+        const userRole = this.props.user.data.role ? this.props.user.data.role : UserRole.DEVELOPER;
         return (
         <Wrapper>
             <span>

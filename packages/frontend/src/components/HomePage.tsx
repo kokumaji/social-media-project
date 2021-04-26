@@ -113,11 +113,10 @@ class Container extends React.Component {
         }
         return (this.state.self.data.user_name != "" ? 
             <PostSection>
-            <TextBox>
-            <p>Welcome Back, <Profile.Mention user={this.state.self as UserObject} /> 🥳</p>
-            <p><b>Did you know?</b> You joined KokuMedia in <b>{`${getMonthYear(new Date(this.state.self.data.created_at))}`}</b></p>
-            </TextBox>
-            <RoleBadge role={UserRole.OWNER} />
+                <TextBox>
+                    <div>Welcome Back, <Profile.Mention user={this.state.self as UserObject} /> 🥳</div>
+                    <p><b>Did you know?</b> You joined KokuMedia in <b>{`${getMonthYear(new Date(this.state.self.data.created_at))}`}</b></p>
+                </TextBox>
             </PostSection> : <LoadingContainer />);
     }
 }
