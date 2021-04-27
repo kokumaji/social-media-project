@@ -1,3 +1,4 @@
+import LocaleFile from "@koku-app/lib_backend/src/locale/Locale";
 import dotenv from "dotenv";
 
 import { KokuServer } from "./KokuServer";
@@ -14,6 +15,8 @@ const server = new KokuServer({
 	server_port: Number(process.env.PORT) || 3000,
 	authSecret: process.env.AUTH_SECRET as string,
 });
+
+console.log(server.locale.getLocale('test-string'));
 
 server.logger.level = "debug";
 server.start();

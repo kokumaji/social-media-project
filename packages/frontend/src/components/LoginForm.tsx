@@ -7,7 +7,7 @@ import * as users from "../api/users";
 import { UserContext, UserStateProvider } from "../components/data/UserManager";
 import * as Form from "./forms/Account";
 
-import * as Variables from "../api/Variables";
+import * as Language from "../api/Language";
 
 const LoginContainer = styled.div`
 	background-color: #202020;
@@ -121,9 +121,9 @@ class LoginFormWrapper extends React.Component<
 		return !this.props.userState.authed ? (
 			<LoginContainer>
 				{console.log(this.props.userState.authed)}
-				<h1>{Variables.ProjectName.toUpperCase()}</h1>
+				<h1>{Language.projectName.toUpperCase()}</h1>
 
-				<Form.FieldLabel>Sign in with your <b>{Variables.ProjectName} Account</b></Form.FieldLabel>
+				<Form.FieldLabel>Sign in with your <b>{Language.projectName} Account</b></Form.FieldLabel>
 				<Form.InputField
 					maxLength={20}
 					value={this.state.username}

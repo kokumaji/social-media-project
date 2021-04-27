@@ -19,6 +19,7 @@
 		"typescript": "^4.2.4"
 	},
 	"dependencies": {
-		"node-emoji": "^1.10.0"
+		"node-emoji": "^1.10.0",
+		"yaml": "^1.10.2"
 	}
 }

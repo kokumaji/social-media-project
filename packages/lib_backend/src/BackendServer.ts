@@ -2,6 +2,7 @@ import chalk from "chalk";
 import cors from "cors";
 import express from "express";
 import { createLogger, format, transports } from "winston";
+import LocaleFile from "./locale/Locale";
 
 // logging imports
 const { printf, combine, label, timestamp, colorize, simple } = format;
@@ -34,6 +35,7 @@ export interface ServerConfiguration {
 export abstract class BackendServer {
 
     app = express();
+    locale = new LocaleFile();
     options;
 
 	logger = createLogger({
