@@ -2,8 +2,6 @@ import * as React from "react";
 import styled from "styled-components";
 import { darkTheme } from "../theme/colorScheme/colors";
 
-import * as emoji from 'node-emoji';
-
 const FooterWrapper = styled.div`
 	position: fixed;
 	bottom: 0;
@@ -24,7 +22,7 @@ const FooterWrapper = styled.div`
 export const Footer = () => (
 	<FooterWrapper>
 		<p>
-			<a href="https://github.com/kokumaji" target="_blank">Kokumaji</a> &copy; {new Date().getFullYear()} {emoji.get('leaf')}
+			<a href="https://github.com/kokumaji" target="_blank">Kokumaji</a> &copy; {new Date().getFullYear()}
 		</p>
 	</FooterWrapper>
 );
