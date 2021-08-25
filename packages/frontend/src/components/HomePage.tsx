@@ -15,6 +15,7 @@ import { darkTheme } from "../theme/colorScheme/colors";
 import { RoleBadge, TestBadge } from "./decoration/Labels";
 import { UserRole } from "../api/models/user/UserRoles";
 import UserObject from "../api/models/user/UserObject";
+import { PostForm } from "./forms/PostForm";
 
 const fieldHeight = "8em";
 const fieldWidth = "100%";
@@ -117,6 +118,7 @@ class Container extends React.Component {
                     <div>Welcome Back, <Profile.Mention user={this.state.self as UserObject} /> 🥳</div>
                     <p><b>Did you know?</b> You joined KokuMedia in <b>{`${getMonthYear(new Date(this.state.self.data.created_at))}`}</b></p>
                 </TextBox>
+                <PostForm user={this.state.self as UserObject}></PostForm>
             </PostSection> : <LoadingContainer />);
     }
 }

@@ -9,6 +9,7 @@ import * as crypto from "crypto";
 
 import { RequestDenied } from "../../api/exceptions/Exceptions";
 import { User } from "../../models/User";
+import { getRole } from "../../models/roles/Role";
 
 interface RegisterPayload {
 	username: string;
@@ -50,14 +51,14 @@ export const register: RH = (server) => async (req, res) => {
 	}
 
 	const clientUser = new ClientUser({
-		username,
-		email,
-		password: hashed,
+		username: username,
+		credentials: { 
+			email, password: hashed
+		},
 		id: IdGen.userId(),
-		clientToken: crypto.randomBytes(24).toString('hex')
+		role: getRole("regular")
 	});
 
-	
 	const clientProfile = new User({
 		username,
 		fullname: username.toUpperCase(),
@@ -71,16 +72,15 @@ export const register: RH = (server) => async (req, res) => {
 			cardScheme: "SummerSunset"
 		}
 	});
-	
-	await clientProfile.save();
 
+	await clientProfile.save();
 	await clientUser.save();
 
 	server.logger.verbose(
 		`Saved user to database`
 	);
 
-
-	const token = jwt.sign({ id: clientUser.id }, server.options.authSecret as string);
-	return res.status(200).send({ auth: true, token: token, consumerToken: clientUser.clientToken });
+	const sessionAddress = await bcrypt.hash(req.socket.remoteAddress, 10);
+	const token = jwt.sign({ id: clientUser.id, sessionAddress: sessionAddress }, server.options.authSecret as string);
+	return res.status(200).send({ auth: true, token: token });
 };

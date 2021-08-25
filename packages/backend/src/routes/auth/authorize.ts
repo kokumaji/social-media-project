@@ -22,9 +22,11 @@ export const authorize: RH = (server) => async (req, res) => {
 	}
 	
 	const clientUser = await ClientUser.findOne({ username: authData.username });
-
+	
 	let isValid = false;
-	if(clientUser) isValid = await bcrypt.compare(authData.password, clientUser.password);
+	if(clientUser) {
+		isValid = bcrypt.compareSync(authData.password, clientUser.credentials.password);
+	}
 
 	if (!clientUser || !isValid) {	
 		return res.status(400).json(new NotFound("Invalid Credentials"));

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { BadRequest } from "../../api/exceptions/Exceptions";
 import { ClientUser } from "../../models/ClientUser";
 import { Post } from "../../models/Post";
@@ -11,41 +11,37 @@ interface PostJSON {
 	content: string;
 }
 
-export const createPost: RH = (server) => async (req: Request, res: Response, next: NextFunction) => {
-    if(req.body) {
-        const json: PostJSON = req.body;
+export const createPost: RH = () => async (req: Request, res: Response) => {
+    if(!req.body) return res.status(400).json(new BadRequest("Missing Parameters"))
+    const postJson = req.body as PostJSON;
 
-        if (!json.content) {
-            return res.status(400).json({ msg: "Bad Request, Missing Content" });
-        } else {
-            let clientObj;
-            clientObj = await ClientUser.findOne({ id: json.id });
-            if (!clientObj)
-                return res.status(400).json({ msg: "Bad Request, Invalid User ID" });
-    
-            const postObj = new Post({
-                postId: IdGen.generate(),
-                createdAt: Date.now(),
-                author: {
-                    userId: clientObj.id,
-                    username: clientObj.username,
-                },
-                meta: {
-                    message: json.content,
-                    favoritesCount: 0,
-                },
-            });
-    
-            postObj.save();
-            return res.status(200).json({ status: "Success!" });
-        }
+    if (!postJson.content) {
+        return res.status(400).json({ msg: "Bad Request, Missing Content" });
+    } else {
+        const clientObj = await ClientUser.findOne({ id: postJson.id });
+        if (!clientObj)
+            return res.status(400).json({ msg: "Bad Request, Invalid User ID" });
+
+        const postObj = new Post({
+            postId: IdGen.generate(),
+            createdAt: Date.now(),
+            author: {
+                userId: clientObj.id,
+                username: clientObj.credentials.username,
+            },
+            meta: {
+                message: postJson.content,
+                favoritesCount: 0,
+            },
+        });
+
+        await postObj.save();
+        return res.status(200).json({ status: "Success!" });
     }
-
-    return res.status(400).json(new BadRequest("Missing Parameters"))
 
 }
 
-export const getPosts: RH = (server) => async (req: Request, res: Response, next: NextFunction) => {
+export const getPosts: RH = () => async (req: Request, res: Response) => {
     if(req.query) {
         const userId = req.query.id;
         if(!userId) return res.status(400).json(new BadRequest("Missing Parameters"));
@@ -56,7 +52,7 @@ export const getPosts: RH = (server) => async (req: Request, res: Response, next
         const author = await ClientUser.findOne( { id: req.query.id as string } );
         if(!author) return res.status(400).json(new BadRequest("User does not exist"))
 
-        const posts = await Post.find({ author: { userId: author.id, username: author.username }, createdAt: { $lt: olderThan } }).limit(postLimit);
+        const posts = await Post.find({ author: { userId: author.id, username: author.credentials.username }, createdAt: { $lt: olderThan } }).limit(postLimit);
         return res.status(200).json(posts);
     }
 

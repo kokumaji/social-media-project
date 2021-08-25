@@ -4,6 +4,8 @@ import { registerRoutes } from "./routes";
 import { errorHandler } from "./api/exceptions/ExceptionHandler";
 
 import { BackendServer, ServerConfiguration } from "@koku-app/lib_backend";
+import { registerRole } from "./models/roles/Role";
+import { PermissionLevel } from "./models/roles/PermissionLevel";
 
 /**
  * Represents a backend server instance.
@@ -34,6 +36,9 @@ export class KokuServer extends BackendServer {
 
 		this.logger.verbose("Registering routes...");
 		registerRoutes(this);
+
+		void registerRole("developer", PermissionLevel.Developer, true, false);
+		void registerRole("regular", PermissionLevel.RegularUser, false, false);
 
 		// JSON Error Handler
 		this.app.use(errorHandler);

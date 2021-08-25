@@ -23,20 +23,12 @@ export const registerRoutes = (server: KokuServer) => {
 	const app = server.app;
 
 	app.post("/authorize", cors(corsOptions), authorize(server));
-	app.post("/v1/posts/create", checkHeader(HttpHeader.AUTHORIZATION, HeaderType.BASIC), authenticateSecret(server), createPost(server));
-	app.get("/v1/posts", checkHeader(HttpHeader.AUTHORIZATION, HeaderType.BASIC), authenticateSecret(server), getPosts(server));
+	app.post("/v1/posts/create", checkHeader(HttpHeader.AUTHORIZATION, HeaderType.BEARER), authenticateJWT(server), createPost(server));
+	app.get("/v1/posts", checkHeader(HttpHeader.AUTHORIZATION, HeaderType.BEARER), authenticateJWT(server), getPosts(server));
 	app.post("/register", register(server));
 
-	// app.get('/api/users', function(req, res) {
-	//     // res.header('Access-Control-Allow-Origin', '*');
-	//     const user = mongoose.connection.model('User', User, 'userProfiles');
-	//     user.find({}).then(collection => {
-	//         res.json(collection);
-	//     });
-	// });
-
     app.get("/v1/user", cors(corsOptions), UserRoutes.handleRequest(server));
-    app.get("/v1/user/:id/:param", cors(corsOptions), authenticateSecret(server), UserRoutes.handleRequest(server));
+    app.get("/v1/user/:id/:param", cors(corsOptions), authenticateJWT(server), UserRoutes.handleRequest(server));
     app.get("/@me/:param", authenticateJWT(server), SelfRoutes.handleRequest(server));
 
 };
@@ -120,7 +112,8 @@ const authenticateSecret: RH = () => async (req: Request, res: Response, next: N
 
 interface AuthToken {
 	iat: number,
-	id: string
+	id: string,
+	sessionAddress: string
 }
 
 const authenticateJWT: RH = (server) => (req: Request, res: Response, next: NextFunction) => {
@@ -133,8 +126,11 @@ const authenticateJWT: RH = (server) => (req: Request, res: Response, next: Next
 			if (!payload || err) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
 			const tokenContent = payload as AuthToken;
 
-			if(!tokenContent.id) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
-			
+			if(!tokenContent.id || !tokenContent.sessionAddress) {
+				console.log("a");
+				return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
+			}
+
 			const user = await fromID(tokenContent.id);
 			if(!user) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
 			next();
