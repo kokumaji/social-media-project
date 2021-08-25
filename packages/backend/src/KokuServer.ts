@@ -1,10 +1,5 @@
-import bodyParser from "body-parser";
-import chalk from "chalk";
-import cors from "cors";
-import express from "express";
 import { connect } from "mongoose";
 import morgan from "morgan";
-import { createLogger, format, transports } from "winston";
 import { registerRoutes } from "./routes";
 import { errorHandler } from "./api/exceptions/ExceptionHandler";
 
@@ -32,9 +27,8 @@ export class KokuServer extends BackendServer {
 		await connect(this.options.mongoDB, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
-		}).catch((err) => {
-			console.error(err);
-			this.logger.error("Failed to connect to MongoDB");
+		}).catch((err: Error) => {
+			this.logger.error(`Failed to connect to MongoDB: ${err.message}`);
 			process.exit();
 		});
 

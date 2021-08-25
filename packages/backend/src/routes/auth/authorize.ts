@@ -1,46 +1,57 @@
 import bcrypt from "bcrypt";
-import { Router } from "express";
 import * as jwt from "jsonwebtoken";
+import { BadRequest, NotFound } from "../../api/exceptions/Exceptions";
 
 import { ClientUser } from "../../models/ClientUser";
+import { Session } from "../../models/Session";
 import { RH } from "../types";
 
+interface AuthData {
+	username: string;
+	password: string;
+}
+
 export const authorize: RH = (server) => async (req, res) => {
-	// more secure to use body
 	if (!req.body) {
-		return res
-			.status(400)
-			.json({ msg: `Bad Request, req.body is ${req.body}` });
+		return res.status(400).json(new BadRequest("Empty or Invalid Body"));
 	}
 
-	const { username, password } = req.body;
-	/* 
-    if (!username || !password) {
-        return res.status(400).json({ msg: "Bad Request" });
-    }
- */
-	server.logger.verbose(
-		`Attempting to authorize user - username='${username}'`
-	);
-	const clientUser = await ClientUser.findOne({ username });
+	const authData = req.body as AuthData;
+	if(!authData.username || !authData.password) {
+		return res.status(400).json(new BadRequest("Missing Parameters"));
+	}
+	
+	const clientUser = await ClientUser.findOne({ username: authData.username });
 
-	if (!clientUser) {
-		return res
-			.status(400)
-			.json({ msg: "Bad Request, ClientUser does not exist" });
+	let isValid = false;
+	if(clientUser) isValid = await bcrypt.compare(authData.password, clientUser.password);
+
+	if (!clientUser || !isValid) {	
+		return res.status(400).json(new NotFound("Invalid Credentials"));
+	}
+	
+	const existingSessions = await Session.find({ id: clientUser.id });
+
+	for(const sess of existingSessions) {
+		const isAddress = await bcrypt.compare(req.socket.remoteAddress, sess.sessionAddress);
+		if(isAddress) {
+			return res.cookie("apiToken", sess.sessionToken, { maxAge: 3600000, sameSite: "lax" })
+			.json({ loginSuccess: true });
+		}
 	}
 
-	const isValid = bcrypt.compareSync(password, clientUser.password);
+	const sessionAddress = await bcrypt.hash(req.socket.remoteAddress, 10);
+	const accessToken = jwt.sign({ id: clientUser.id, sessionAddress: sessionAddress }, server.options.authSecret as string);
 
-	if (!isValid) {
-		return res.json({ loginSuccess: false });
-	}
+	const session = new Session({
+		id: clientUser.id,
+		sessionAddress: sessionAddress,
+		sessionToken: accessToken
+	});
 
-	const accessToken = jwt.sign(
-		{ id: clientUser.id },
-		server.options.authSecret as string
-	);
+	await session.save();
+
 	return res
-		.cookie("apiToken", accessToken, { maxAge: 3600000, sameSite: "lax" })
+		.cookie("apiToken", session.sessionToken, { maxAge: 3600000, sameSite: "lax" })
 		.json({ loginSuccess: true });
 };

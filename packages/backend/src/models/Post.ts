@@ -1,5 +1,4 @@
 import { Document, model, Schema } from "mongoose";
-import { Comment } from "./Comment";
 
 interface PostDocument extends Document {
 	postId: string;

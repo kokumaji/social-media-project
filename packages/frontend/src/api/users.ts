@@ -13,7 +13,7 @@ export const getUser = async (id: string) => {
 export const getSelf = async (token: string) => {
 	token = token.replace("apiToken=", "");
 
-	return await axios.post("http://localhost:3000/api/@me/debug", {  }, { headers: {
+	return await axios.get("http://localhost:3000/api/@me/debug", { headers: {
 		'Authorization' : `Bearer ${getApiToken(document.cookie)}`
 	} })
 	.then(async (response) => {

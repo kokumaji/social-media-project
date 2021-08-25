@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { KokuServer } from "../KokuServer";
 import { authorize } from "./auth/authorize";
 import { register } from "./auth/register";
@@ -5,11 +6,11 @@ import { register } from "./auth/register";
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { RH } from "./types";
-import { NotFound, RequestDenied, UnauthorizedError } from "../api/exceptions/Exceptions";
+import { RequestDenied, UnauthorizedError } from "../api/exceptions/Exceptions";
 import cors from "cors";
 import * as UserRoutes from "./api/UserRoutes";
 import * as SelfRoutes from "./api/SelfRoutes";
-import { fromID, User } from "../models/User";
+import { fromID } from "../models/User";
 import { ClientUser } from "../models/ClientUser";
 import { createPost, getPosts } from "./api/PostRoutes";
 
@@ -36,7 +37,7 @@ export const registerRoutes = (server: KokuServer) => {
 
     app.get("/v1/user", cors(corsOptions), UserRoutes.handleRequest(server));
     app.get("/v1/user/:id/:param", cors(corsOptions), authenticateSecret(server), UserRoutes.handleRequest(server));
-    app.post("/@me/:param", authenticateJWT(server), SelfRoutes.handleRequest(server));
+    app.get("/@me/:param", authenticateJWT(server), SelfRoutes.handleRequest(server));
 
 };
 
@@ -52,10 +53,9 @@ const enum HeaderType {
 }
 
 const checkHeader = (header: HttpHeader, type: HeaderType) => (req: Request, res: Response, next: NextFunction) => {
-	var validHeader = false;
-	var validType = false;
-
-	var headerContent; 
+	let validHeader = false;
+	let validType = false;
+	let headerContent; 
 
 	switch(header) {
 		case HttpHeader.AUTHORIZATION:
@@ -96,10 +96,10 @@ const checkHeader = (header: HttpHeader, type: HeaderType) => (req: Request, res
 
 }
 
-const authenticateSecret: RH = (server) => async (req: Request, res: Response, next: NextFunction) => {
+const authenticateSecret: RH = () => async (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.headers.authorization;
 	if(authHeader) {
-		var token = authHeader.split(" ")[1];
+		let token = authHeader.split(" ")[1];
 
 		if(token.startsWith("clientToken:")) {
 			token = token.replace("clientToken:", "");
@@ -123,7 +123,7 @@ interface AuthToken {
 	id: string
 }
 
-const authenticateJWT: RH = (server) => async (req: Request, res: Response, next: NextFunction) => {
+const authenticateJWT: RH = (server) => (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.headers.authorization;
 
 	if (authHeader) {
@@ -134,12 +134,12 @@ const authenticateJWT: RH = (server) => async (req: Request, res: Response, next
 			const tokenContent = payload as AuthToken;
 
 			if(!tokenContent.id) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
-
-			const clientUser = await fromID(tokenContent.id);
-			if(!clientUser) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
-
+			
+			const user = await fromID(tokenContent.id);
+			if(!user) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
 			next();
 		});
+
 	} else {
 		return res.status(401).json(new UnauthorizedError("No Bearer Token provided"));
 	}

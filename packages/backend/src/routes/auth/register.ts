@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import { Router } from "express";
 import * as jwt from "jsonwebtoken";
 
 import * as IdGen from "../../api/objects/Snowflake";
@@ -11,6 +10,12 @@ import * as crypto from "crypto";
 import { RequestDenied } from "../../api/exceptions/Exceptions";
 import { User } from "../../models/User";
 
+interface RegisterPayload {
+	username: string;
+	password: string;
+	email: string;
+}
+
 export const register: RH = (server) => async (req, res) => {
 	// We strictly want to work with JSON requests, so let's block urlencoded entirely
 	if (req.is("application/x-www-form-urlencoded"))
@@ -18,15 +23,15 @@ export const register: RH = (server) => async (req, res) => {
 			.status(403)
 			.json(new RequestDenied("This Request is not allowed here."));
 
-	const jsonBody = req.body;
+	const jsonBody = req.body as RegisterPayload;
 
 	if (!req.body) {
 		return res.status(400).json({ msg: "Bad Request, Missing Parameters" });
 	}
 
-	const username = req.body.username;
-	const email = req.body.email;
-	const password = req.body.password;
+	const username = jsonBody.username;
+	const password = jsonBody.password;
+	const email = jsonBody.email;
 
 	if (!username || !password) {
 		return res
@@ -56,9 +61,9 @@ export const register: RH = (server) => async (req, res) => {
 	const clientProfile = new User({
 		username,
 		fullname: username.toUpperCase(),
-		age: 19,
-		location: "Germany",
-		gender: "Non-Binary",
+		age: 0,
+		location: "null",
+		gender: "null",
 		profile: {
 			imageUrl: "null",
 			description: "null",

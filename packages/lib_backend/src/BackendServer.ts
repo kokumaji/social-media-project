@@ -30,6 +30,11 @@ export interface ServerConfiguration {
      */
     authSecret?: string,
 
+    /**
+     * Server's Identification String (used for logging atm)
+     */
+    name: string
+
 }
 
 export abstract class BackendServer {
@@ -37,23 +42,25 @@ export abstract class BackendServer {
     app = express();
     locale = new LocaleFile();
     options;
-
-	logger = createLogger({
-		transports: [new transports.Console()],
-		format: combine(
-			label({ label: "cdn" }),
-			timestamp(),
-			colorize(),
-			simple(),
-			fmt
-		),
-	});
+    logger;
 
     constructor(readonly config: ServerConfiguration) {
         this.options = config;
         this.app.use(cors());
         this.app.use(express.json());
         this.app.set('json spaces', 2);
+
+        this.logger = createLogger({
+            transports: [new transports.Console()],
+            format: combine(
+                label({ label: this.config.name }),
+                timestamp(),
+                colorize(),
+                simple(),
+                fmt
+            ),
+        });
+
         /* ADD MONGODB WHEN NEEDED
         this.app.use(
 			morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })

@@ -1,14 +1,10 @@
 import * as React from "react";
-import { Redirect } from "react-router-dom";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "styled-components";
 
-import { NotFound } from "../views/NotFound";
-
 import { getMonthYear } from "../api/ReadableData";
 import { getUser } from "../api/users";
-import { defaultDark, getColorScheme } from "../theme/colorScheme/profileCards";
-import { UserWithCardScheme } from "../types/User";
+import { defaultDark } from "../theme/colorScheme/profileCards";
 import { Post } from "./data/Post";
 import UserObject, { defaultUser } from "../api/models/user/UserObject";
 import { CardScheme } from "../types/Theme";
@@ -20,6 +16,7 @@ const ProfilePicture = styled.div`
 	width: 6em;
 
 	border-radius: 50%;
+	background-color: black;
 `;
 
 const HeaderWrapper = styled.div`
@@ -106,9 +103,7 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
 	}
 
 	render() {
-		const colorScheme: CardScheme = /*this.state.userData.theme.colorScheme 
-										? this.state.userData.theme.colorScheme 
-										:*/ defaultDark;
+		const colorScheme: CardScheme = defaultDark as CardScheme;
 
 		const bannerBg = {
 			backgroundColor: colorScheme.cardBannerBg,/*
@@ -122,7 +117,6 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
         };
-
 
 		const userNameColor = {
 			color: colorScheme.cardUserText,
