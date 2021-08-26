@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
-import styled from 'styled-components';
+import * as React from "react";
+import { RouteComponentProps, withRouter } from "react-router";
+import styled from "styled-components";
 
-import { User } from '../api/models/user/User';
-import { getMonthYear } from '../api/ReadableData';
-import { getUser } from '../api/users';
-import { darkTheme } from '../theme/colorScheme/colors';
-import { defaultDark } from '../theme/colorScheme/profileCards';
-import { CardScheme } from '../types/Theme';
-import { Post } from './data/Post';
-import { NameComponent } from './profile/AccountName';
+import { User } from "../api/models/user/User";
+import { getMonthYear } from "../api/ReadableData";
+import { getUser } from "../api/users";
+import { darkTheme } from "../theme/colorScheme/colors";
+import { defaultDark } from "../theme/colorScheme/profileCards";
+import { CardScheme } from "../types/Theme";
+import { Post } from "./data/Post";
+import { NameComponent } from "./profile/AccountName";
 
 const ProfilePicture = styled.div`
 	height: 6em;
@@ -85,7 +85,7 @@ class ProfileComponent extends React.Component<
 	state = {
 		notFound: false,
 		userData: User.defaultUser,
-		imgUrl: `http://localhost:8000/profile_pictures/0`
+		imgUrl: `http://localhost:8000/profile_pictures/0`,
 	};
 
 	async componentDidMount() {
@@ -94,7 +94,7 @@ class ProfileComponent extends React.Component<
 			const queriedUser = await getUser(id);
 			this.setState({
 				userData: queriedUser,
-				imgUrl: `http://localhost:8000/profile_pictures/${id}`
+				imgUrl: `http://localhost:8000/profile_pictures/${id}`,
 			});
 		} catch (err) {
 			console.log(err);
@@ -110,23 +110,23 @@ class ProfileComponent extends React.Component<
 				colorScheme.cardBannerBg /*
 			backgroundImage: `url(${this.state.userData.media.profile_banner_url})`,
 			backgroundRepeat: "no-repeat",
-			backgroundSize: "cover",*/
+			backgroundSize: "cover",*/,
 		};
 
 		const withImage = {
 			backgroundImage: `url(${this.state.imgUrl})`,
 			backgroundSize: "cover",
-			backgroundRepeat: "no-repeat"
+			backgroundRepeat: "no-repeat",
 		};
 
 		const userNameColor = {
-			color: colorScheme.cardUserText
+			color: colorScheme.cardUserText,
 		};
 
 		const style = {
 			backgroundColor: colorScheme.cardBackground,
 			borderColor: colorScheme.cardBackground,
-			color: colorScheme.cardText
+			color: colorScheme.cardText,
 		};
 
 		const numberOfPosts = 0;

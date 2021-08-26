@@ -41,9 +41,7 @@ export const register: RH = (server) => async (req, res) => {
 	}
 
 	const hashed = await bcrypt.hash(password, 10);
-	server.logger.verbose(
-		`Attempting to register user - username='${username}'`
-	);
+	server.logger.verbose(`Attempting to register user - username='${username}'`);
 
 	// If user already exists
 	if (await ClientUser.exists({ username })) {
@@ -52,11 +50,12 @@ export const register: RH = (server) => async (req, res) => {
 
 	const clientUser = new ClientUser({
 		username: username,
-		credentials: { 
-			email, password: hashed
+		credentials: {
+			email,
+			password: hashed,
 		},
 		id: IdGen.userId(),
-		role: getRole("regular")
+		role: getRole("regular"),
 	});
 
 	const clientProfile = new User({
@@ -69,18 +68,19 @@ export const register: RH = (server) => async (req, res) => {
 			imageUrl: "null",
 			description: "null",
 			bannerUrl: "null",
-			cardScheme: "SummerSunset"
-		}
+			cardScheme: "SummerSunset",
+		},
 	});
 
 	await clientProfile.save();
 	await clientUser.save();
 
-	server.logger.verbose(
-		`Saved user to database`
-	);
+	server.logger.verbose(`Saved user to database`);
 
 	const sessionAddress = await bcrypt.hash(req.socket.remoteAddress, 10);
-	const token = jwt.sign({ id: clientUser.id, sessionAddress: sessionAddress }, server.options.authSecret as string);
+	const token = jwt.sign(
+		{ id: clientUser.id, sessionAddress: sessionAddress },
+		server.options.authSecret as string
+	);
 	return res.status(200).send({ auth: true, token: token });
 };

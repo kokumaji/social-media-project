@@ -93,16 +93,16 @@ export const Spacer = styled.span`
 export const HideSensitive = styled.button`
 	position: absolute;
 
-	border: 0px; 
+	border: 0px;
 	border-radius: 0px;
-	
+
 	border-left: 1px solid ${darkTheme.main.bodyColor};
 
-	cursor: pointer; 
-	color: white; 
-	background-color: rgba(0,0,0,0); 
-	
+	cursor: pointer;
+	color: white;
+	background-color: rgba(0, 0, 0, 0);
+
 	top: 20%;
 	right: 8px;
-	z-index: 2; 
+	z-index: 2;
 `;

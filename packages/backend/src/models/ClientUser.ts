@@ -15,26 +15,24 @@ interface ClientUserDocument extends Document {
 
 	credentials: Credentials;
 	role: RoleDocument;
-
 }
 
 const ClientUserSchema = new Schema<ClientUserDocument>({
 	id: String,
-	username: String, 
+	username: String,
 	createdAt: { type: Number, default: Date.now },
-	
-	credentials: { 
-		email: String, 
-		password: String, 
+
+	credentials: {
+		email: String,
+		password: String,
 	},
 
-	role: { 
+	role: {
 		roleName: String,
 		obtainable: Boolean,
 		permissionLevel: Number,
-		publicBadge: Boolean	
-	}
-
+		publicBadge: Boolean,
+	},
 });
 
 export const ClientUser = model<ClientUserDocument>(
@@ -42,6 +40,9 @@ export const ClientUser = model<ClientUserDocument>(
 	ClientUserSchema
 );
 
-export const hasPermission = (user: ClientUserDocument, perm: PermissionLevel) => {
+export const hasPermission = (
+	user: ClientUserDocument,
+	perm: PermissionLevel
+) => {
 	return user?.role.permissionLevel == perm;
 };

@@ -22,7 +22,10 @@ const FooterWrapper = styled.div`
 export const Footer = () => (
 	<FooterWrapper>
 		<p>
-			<a href="https://github.com/kokumaji" target="_blank">Kokumaji</a> &copy; {new Date().getFullYear()}
+			<a href="https://github.com/kokumaji" target="_blank">
+				Kokumaji
+			</a>{" "}
+			&copy; {new Date().getFullYear()}
 		</p>
 	</FooterWrapper>
 );

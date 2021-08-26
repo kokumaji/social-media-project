@@ -8,12 +8,10 @@ export const errorHandler = (
 	next: NextFunction
 ) => {
 	if (error instanceof SyntaxError) {
-		return response
-			.status(error.status)
-			.json({
-				status: error.status,
-				message: "Bad Request; Malformed JSON Body!",
-			});
+		return response.status(error.status).json({
+			status: error.status,
+			message: "Bad Request; Malformed JSON Body!",
+		});
 	}
 	return response.status(error.status).json({ msg: error.message });
 };

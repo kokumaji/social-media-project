@@ -14,60 +14,55 @@ const fmt = printf(({ level, message, label, timestamp }) => {
 });
 
 export interface ServerConfiguration {
-    
-    /**
-     * Preformatted MongoDB url
-     */
-    mongoDB: string, 
+	/**
+	 * Preformatted MongoDB url
+	 */
+	mongoDB: string;
 
-    /**
-     * Server Port 
-     */
-    server_port: number,
+	/**
+	 * Server Port
+	 */
+	server_port: number;
 
-    /**
-     * Used for JWT encryption
-     */
-    authSecret?: string,
+	/**
+	 * Used for JWT encryption
+	 */
+	authSecret?: string;
 
-    /**
-     * Server's Identification String (used for logging atm)
-     */
-    name: string
-
+	/**
+	 * Server's Identification String (used for logging atm)
+	 */
+	name: string;
 }
 
 export abstract class BackendServer {
+	app = express();
+	locale = new LocaleFile();
+	options;
+	logger;
 
-    app = express();
-    locale = new LocaleFile();
-    options;
-    logger;
+	constructor(readonly config: ServerConfiguration) {
+		this.options = config;
+		this.app.use(cors());
+		this.app.use(express.json());
+		this.app.set("json spaces", 2);
 
-    constructor(readonly config: ServerConfiguration) {
-        this.options = config;
-        this.app.use(cors());
-        this.app.use(express.json());
-        this.app.set('json spaces', 2);
+		this.logger = createLogger({
+			transports: [new transports.Console()],
+			format: combine(
+				label({ label: this.config.name }),
+				timestamp(),
+				colorize(),
+				simple(),
+				fmt
+			),
+		});
 
-        this.logger = createLogger({
-            transports: [new transports.Console()],
-            format: combine(
-                label({ label: this.config.name }),
-                timestamp(),
-                colorize(),
-                simple(),
-                fmt
-            ),
-        });
-
-        /* ADD MONGODB WHEN NEEDED
+		/* ADD MONGODB WHEN NEEDED
         this.app.use(
 			morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })
 		);*/
-    }
+	}
 
-    abstract start(): void;
-
-} 
-
+	abstract start(): void;
+}

@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { User } from '../api/models/user/User';
-import { getMonthYear } from '../api/ReadableData';
-import { getSelf } from '../api/users';
-import { darkTheme } from '../theme/colorScheme/colors';
-import { LoadingContainer } from './decoration/Loading';
-import { PostForm } from './forms/PostForm';
-import * as Profile from './profile/ProfileCard';
+import { User } from "../api/models/user/User";
+import { getMonthYear } from "../api/ReadableData";
+import { getSelf } from "../api/users";
+import { darkTheme } from "../theme/colorScheme/colors";
+import { LoadingContainer } from "./decoration/Loading";
+import { PostForm } from "./forms/PostForm";
+import * as Profile from "./profile/ProfileCard";
 
 const fieldHeight = "8em";
 const fieldWidth = "100%";
@@ -55,23 +55,23 @@ const PostLabel = styled.label`
 `;
 
 const PostField = styled.textarea`
-    ${darkTheme.textFields.border}
-    color: ${darkTheme.textFields.textColor};
-    background-color: ${darkTheme.textFields.fieldColor};
-    width: ${fieldWidth};
-    height: ${fieldHeight};
-    padding: 1em;
-    margin: auto;
-    resize: none;
-    ${fieldFont}
+	${darkTheme.textFields.border}
+	color: ${darkTheme.textFields.textColor};
+	background-color: ${darkTheme.textFields.fieldColor};
+	width: ${fieldWidth};
+	height: ${fieldHeight};
+	padding: 1em;
+	margin: auto;
+	resize: none;
+	${fieldFont}
 
-    ${fixPlaceholder}
+	${fixPlaceholder}
 
     ${fieldFocus}
 `;
 
 function delay(ms: number) {
-	return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 class Container extends React.Component<
@@ -82,7 +82,7 @@ class Container extends React.Component<
 		super(props);
 		this.state = {
 			hasError: false,
-			user: undefined
+			user: undefined,
 		};
 	}
 
@@ -90,7 +90,7 @@ class Container extends React.Component<
 		try {
 			const user = await getSelf();
 			this.setState({
-				user
+				user,
 			});
 		} catch (err) {
 			console.log(err);

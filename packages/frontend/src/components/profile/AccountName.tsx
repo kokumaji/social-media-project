@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { User } from '../../api/models/user/User';
-import { UserRole } from '../../api/models/user/UserRoles';
-import { UserModel } from '../data/UserModel';
-import { RoleBadge } from '../decoration/Labels';
+import { User } from "../../api/models/user/User";
+import { UserRole } from "../../api/models/user/UserRoles";
+import { UserModel } from "../data/UserModel";
+import { RoleBadge } from "../decoration/Labels";
 
 const Wrapper = styled.div`
 	display: flex;

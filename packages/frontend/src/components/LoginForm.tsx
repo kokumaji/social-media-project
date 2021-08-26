@@ -42,7 +42,7 @@ class LoginFormWrapper extends React.Component<
 		password: "",
 		loginFailed: false,
 		showPwd: false,
-		buttonColor: "#181818"
+		buttonColor: "#181818",
 	};
 
 	/**
@@ -58,9 +58,9 @@ class LoginFormWrapper extends React.Component<
 	private handlePasswordInput(e: React.ChangeEvent<HTMLInputElement>) {
 		this.setState({ password: e.target.value });
 		if (e.target.value === "") this.setState({ loginFailed: false });
-		if(e.target.value.length >= 8) {
-			this.state.buttonColor = '#5e8c83';
-		} else this.state.buttonColor = '#181818';
+		if (e.target.value.length >= 8) {
+			this.state.buttonColor = "#5e8c83";
+		} else this.state.buttonColor = "#181818";
 	}
 
 	/**
@@ -73,8 +73,8 @@ class LoginFormWrapper extends React.Component<
 	}
 
 	private async handleEnterKey(e: React.KeyboardEvent<HTMLInputElement>) {
-		if(e.key != "Enter") return;
-		
+		if (e.key != "Enter") return;
+
 		try {
 			const successful = await this.props.userState.authenticate(
 				this.state.username,
@@ -111,11 +111,11 @@ class LoginFormWrapper extends React.Component<
 			borderStyle: `${borderStyle}`,
 			borderColor: `${borderColor}`,
 			color: `${borderColor}`,
-			transition: "0.1s"
+			transition: "0.1s",
 		};
 		const buttonStyle = {
 			backgroundColor: `${this.state.buttonColor}`,
-			transition: "0.2s"
+			transition: "0.2s",
 		};
 
 		return !this.props.userState.authed ? (
@@ -123,7 +123,9 @@ class LoginFormWrapper extends React.Component<
 				{console.log(this.props.userState.authed)}
 				<h1>{Language.projectName.toUpperCase()}</h1>
 
-				<Form.FieldLabel>Sign in with your <b>{Language.projectName} Account</b></Form.FieldLabel>
+				<Form.FieldLabel>
+					Sign in with your <b>{Language.projectName} Account</b>
+				</Form.FieldLabel>
 				<Form.InputField
 					maxLength={20}
 					value={this.state.username}
@@ -131,9 +133,10 @@ class LoginFormWrapper extends React.Component<
 					onChange={this.handleUsernameInput.bind(this)}
 				/>
 
-
 				{this.state.loginFailed && (
-					<Form.Error>Login Failed. The provided credentials are invalid</Form.Error>
+					<Form.Error>
+						Login Failed. The provided credentials are invalid
+					</Form.Error>
 				)}
 
 				<Form.FieldRow>
@@ -153,9 +156,11 @@ class LoginFormWrapper extends React.Component<
 					>
 						{this.state.showPwd ? <Icon.Eye /> : <Icon.EyeSlash />}
 					</Form.HideSensitive>
-					
 				</Form.FieldRow>
-				<Form.ConfirmButton style={buttonStyle} onClick={this.tryLogin.bind(this)} >
+				<Form.ConfirmButton
+					style={buttonStyle}
+					onClick={this.tryLogin.bind(this)}
+				>
 					login
 				</Form.ConfirmButton>
 				<p>
@@ -170,6 +175,6 @@ class LoginFormWrapper extends React.Component<
 
 export const LoginForm = () => (
 	<UserContext.Consumer>
-		{state => <LoginFormWrapper userState={state} />}
+		{(state) => <LoginFormWrapper userState={state} />}
 	</UserContext.Consumer>
 );

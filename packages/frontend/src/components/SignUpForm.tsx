@@ -70,7 +70,7 @@ class SignUpWrapper extends React.Component<
 		password: "",
 		passwordConfirm: "",
 		email: "",
-		emailConfirm: ""
+		emailConfirm: "",
 	};
 
 	private handleUsernameInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -205,6 +205,6 @@ class SignUpWrapper extends React.Component<
 
 export const SignUpForm = () => (
 	<UserContext.Consumer>
-		{state => <SignUpWrapper userState={state} />}
+		{(state) => <SignUpWrapper userState={state} />}
 	</UserContext.Consumer>
 );

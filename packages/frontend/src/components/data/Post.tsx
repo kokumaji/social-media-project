@@ -1,9 +1,9 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import * as React from "react";
+import styled from "styled-components";
 
-import { User } from '../../api/models/user/User';
-import * as formatter from '../../api/ReadableData';
-import { Icon } from '../media/Icon';
+import { User } from "../../api/models/user/User";
+import * as formatter from "../../api/ReadableData";
+import { Icon } from "../media/Icon";
 
 const PostContainer = styled.div`
 	display: flex;

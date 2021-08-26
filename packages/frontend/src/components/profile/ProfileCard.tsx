@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { User } from '../../api/models/user/User';
-import { UserRole } from '../../api/models/user/UserRoles';
-import { darkTheme } from '../../theme/colorScheme/colors';
-import { getColorScheme } from '../../theme/colorScheme/profileCards';
-import { UserData } from '../data/UserManager';
-import { UserModel } from '../data/UserModel';
-import { RoleBadge } from '../decoration/Labels';
-import { NameComponent } from './AccountName';
+import { User } from "../../api/models/user/User";
+import { UserRole } from "../../api/models/user/UserRoles";
+import { darkTheme } from "../../theme/colorScheme/colors";
+import { getColorScheme } from "../../theme/colorScheme/profileCards";
+import { UserData } from "../data/UserManager";
+import { UserModel } from "../data/UserModel";
+import { RoleBadge } from "../decoration/Labels";
+import { NameComponent } from "./AccountName";
 
 const MentionableContainer = styled.div`
 	display: inline;
@@ -104,20 +104,20 @@ const ProfileImage = styled.div`
 export class Mention extends React.Component<{ user: User }> {
 	state = {
 		cardColor: this.props.user.theme.colorScheme,
-		imgUrl: `http://localhost:8000/profile_pictures/${this.props.user.data.id}`
+		imgUrl: `http://localhost:8000/profile_pictures/${this.props.user.data.id}`,
 	};
 
 	render() {
 		const cardStyle = {
 			backgroundColor: this.state.cardColor?.cardBackground,
 			borderColor: this.state.cardColor?.cardBackground,
-			color: this.state.cardColor?.cardText
+			color: this.state.cardColor?.cardText,
 		};
 
 		const withImage = {
 			backgroundImage: `url(${this.state.imgUrl})`,
 			backgroundSize: "cover",
-			backgroundRepeat: "no-repeat"
+			backgroundRepeat: "no-repeat",
 		};
 
 		return (

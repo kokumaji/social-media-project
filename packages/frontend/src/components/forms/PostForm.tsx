@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { User } from '../../api/models/user/User';
-import { getSelf } from '../../api/users';
-import { PostContext, PostStateProvider } from '../data/PostManager';
+import { User } from "../../api/models/user/User";
+import { getSelf } from "../../api/users";
+import { PostContext, PostStateProvider } from "../data/PostManager";
 
 const PostWrapper = styled.div`
 	background-color: black;
@@ -21,7 +21,7 @@ class PostFormContainer extends React.Component<
 	{ postContent: string }
 > {
 	state = {
-		postContent: ""
+		postContent: "",
 	};
 
 	private handlePostInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -53,6 +53,6 @@ class PostFormContainer extends React.Component<
 
 export const PostForm = ({ user }: { user?: User }) => (
 	<PostContext.Consumer>
-		{state => <PostFormContainer postState={state} user={user} />}
+		{(state) => <PostFormContainer postState={state} user={user} />}
 	</PostContext.Consumer>
 );

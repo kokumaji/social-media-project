@@ -11,7 +11,6 @@ import { PermissionLevel } from "./models/roles/PermissionLevel";
  * Represents a backend server instance.
  */
 export class KokuServer extends BackendServer {
-
 	constructor(options: ServerConfiguration) {
 		super(options);
 

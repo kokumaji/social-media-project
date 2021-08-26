@@ -20,7 +20,7 @@ const checkCookie = () => {
 	return cookie ? true : false;
 };
 
-export const UserContext = React.createContext<UserStateProvider> ({
+export const UserContext = React.createContext<UserStateProvider>({
 	authed: checkCookie(),
 	id: "",
 	authenticate: async () => false,
@@ -28,11 +28,11 @@ export const UserContext = React.createContext<UserStateProvider> ({
 });
 
 interface UserDataProvider {
-	user: UserModel | null
+	user: UserModel | null;
 }
 
 export const UserData = React.createContext<UserDataProvider>({
-	user: null
+	user: null,
 });
 
 /**

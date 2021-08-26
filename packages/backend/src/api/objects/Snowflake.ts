@@ -72,7 +72,7 @@ const idToBinary = (num: string) => {
 
 export const userId = () => {
 	return Math.floor(Math.random() * 100000000) + 1;
-}
+};
 
 /**
  * Transforms a snowflake from a bit string to a decimal string.
