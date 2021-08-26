@@ -12,16 +12,14 @@ interface PostJSON {
 }
 
 export const createPost: RH = () => async (req: Request, res: Response) => {
-	if (!req.body)
-		return res.status(400).json(new BadRequest("Missing Parameters"));
+	if (!req.body) return res.status(400).json(new BadRequest("Missing Parameters"));
 	const postJson = req.body as PostJSON;
 
 	if (!postJson.content) {
 		return res.status(400).json({ msg: "Bad Request, Missing Content" });
 	} else {
 		const clientObj = await ClientUser.findOne({ id: postJson.id });
-		if (!clientObj)
-			return res.status(400).json({ msg: "Bad Request, Invalid User ID" });
+		if (!clientObj) return res.status(400).json({ msg: "Bad Request, Invalid User ID" });
 
 		const postObj = new Post({
 			postId: IdGen.generate(),
@@ -44,21 +42,13 @@ export const createPost: RH = () => async (req: Request, res: Response) => {
 export const getPosts: RH = () => async (req: Request, res: Response) => {
 	if (req.query) {
 		const userId = req.query.id;
-		if (!userId)
-			return res.status(400).json(new BadRequest("Missing Parameters"));
+		if (!userId) return res.status(400).json(new BadRequest("Missing Parameters"));
 
-		const olderThan =
-			req.query.before && !isNaN(Number(req.query.before))
-				? Number(req.query.before)
-				: Date.now();
-		const postLimit =
-			req.query.limit && !isNaN(Number(req.query.limit))
-				? Math.min(10, Number(req.query.limit))
-				: 10;
+		const olderThan = req.query.before && !isNaN(Number(req.query.before)) ? Number(req.query.before) : Date.now();
+		const postLimit = req.query.limit && !isNaN(Number(req.query.limit)) ? Math.min(10, Number(req.query.limit)) : 10;
 
 		const author = await ClientUser.findOne({ id: req.query.id as string });
-		if (!author)
-			return res.status(400).json(new BadRequest("User does not exist"));
+		if (!author) return res.status(400).json(new BadRequest("User does not exist"));
 
 		const posts = await Post.find({
 			author: { userId: author.id, username: author.credentials.username },

@@ -35,14 +35,8 @@ const ClientUserSchema = new Schema<ClientUserDocument>({
 	},
 });
 
-export const ClientUser = model<ClientUserDocument>(
-	"ClientUser",
-	ClientUserSchema
-);
+export const ClientUser = model<ClientUserDocument>("ClientUser", ClientUserSchema);
 
-export const hasPermission = (
-	user: ClientUserDocument,
-	perm: PermissionLevel
-) => {
+export const hasPermission = (user: ClientUserDocument, perm: PermissionLevel) => {
 	return user?.role.permissionLevel == perm;
 };

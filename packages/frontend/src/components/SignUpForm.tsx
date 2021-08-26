@@ -102,9 +102,7 @@ class SignUpWrapper extends React.Component<
 	}
 
 	private validatePassword() {
-		const regexStrong = new RegExp(
-			"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-		);
+		const regexStrong = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
 		const regexMedium = new RegExp(
 			"^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
 		);
@@ -120,9 +118,7 @@ class SignUpWrapper extends React.Component<
 		return re.test(this.state.email.toLowerCase());
 	}
 
-	private async registerUser(
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) {
+	private async registerUser(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		e.preventDefault();
 		try {
 			if (!this.validatePassword()) {
@@ -145,11 +141,7 @@ class SignUpWrapper extends React.Component<
 				return;
 			}
 
-			const res = await this.props.userState.register(
-				this.state.username,
-				this.state.email,
-				this.state.password
-			);
+			const res = await this.props.userState.register(this.state.username, this.state.email, this.state.password);
 			console.log(res);
 		} catch (err) {
 			console.error(err);
@@ -193,9 +185,7 @@ class SignUpWrapper extends React.Component<
 						placeholder="Confirm Password"
 					/>
 				</Form.FieldRow>
-				<Form.ConfirmButton onClick={this.registerUser.bind(this)}>
-					sign up 🔥
-				</Form.ConfirmButton>
+				<Form.ConfirmButton onClick={this.registerUser.bind(this)}>sign up 🔥</Form.ConfirmButton>
 			</SignUpContainer>
 		) : (
 			<Redirect to="/home" />
@@ -204,7 +194,5 @@ class SignUpWrapper extends React.Component<
 }
 
 export const SignUpForm = () => (
-	<UserContext.Consumer>
-		{(state) => <SignUpWrapper userState={state} />}
-	</UserContext.Consumer>
+	<UserContext.Consumer>{state => <SignUpWrapper userState={state} />}</UserContext.Consumer>
 );

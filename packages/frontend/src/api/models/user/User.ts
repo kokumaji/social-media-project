@@ -1,8 +1,8 @@
-import { defaultDark } from '../../../theme/colorScheme/profileCards';
-import { CardScheme } from '../../../types/Theme';
-import Status from './ClientStatus';
-import Gender from './GenderModel';
-import { UserRole } from './UserRoles';
+import { defaultDark } from "../../../theme/colorScheme/profileCards";
+import { CardScheme } from "../../../types/Theme";
+import Status from "./ClientStatus";
+import Gender from "./GenderModel";
+import { UserRole } from "./UserRoles";
 
 interface IUserData {
 	// id, fullname, username, created at, role
@@ -15,7 +15,7 @@ interface IUserData {
 
 const DEFAULT_USER_DATA: Partial<IUserData> = {
 	created_at: new Date(),
-	role: null
+	role: null,
 };
 
 interface IUserMeta {
@@ -32,7 +32,7 @@ const DEFAULT_USER_META: IUserMeta = {
 	birthday: null,
 	description: "",
 	gender: Gender.HIDDEN,
-	status: Status.OFFLINE
+	status: Status.OFFLINE,
 };
 
 interface IUserMedia {
@@ -42,7 +42,7 @@ interface IUserMedia {
 
 const DEFAULT_USER_MEDIA: IUserMedia = {
 	profile_picture_url: null,
-	profile_banner_url: null
+	profile_banner_url: null,
 };
 
 interface IUserTheme {
@@ -50,7 +50,7 @@ interface IUserTheme {
 }
 
 const DEFAULT_USER_THEME: IUserTheme = {
-	colorScheme: defaultDark
+	colorScheme: defaultDark,
 };
 
 export class User {
@@ -65,7 +65,7 @@ export class User {
 			name: "DEFAULT",
 			user_name: "DEFAULT",
 			created_at: new Date(0),
-			role: null
+			role: null,
 		});
 	}
 

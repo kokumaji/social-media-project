@@ -1,18 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import {
-	BadRequest,
-	NotFound,
-	RequestDenied,
-} from "../../api/exceptions/Exceptions";
+import { BadRequest, NotFound, RequestDenied } from "../../api/exceptions/Exceptions";
 import { ClientUser } from "../../models/ClientUser";
 import * as User from "../../models/User";
 import { RH } from "../types";
 
-export const handleRequest: RH = (server) => async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
+export const handleRequest: RH = server => async (req: Request, res: Response, next: NextFunction) => {
 	if (req.query) {
 		const id = req.query.id;
 		console.log(id);
@@ -29,10 +21,7 @@ export const handleRequest: RH = (server) => async (
 			with_posts: withPosts,
 		});
 
-		if (!requestedUser)
-			return res
-				.status(404)
-				.json(new NotFound("Requested User does not exist"));
+		if (!requestedUser) return res.status(404).json(new NotFound("Requested User does not exist"));
 
 		return res.status(200).json(requestedUser);
 	}

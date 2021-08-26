@@ -19,18 +19,15 @@ export const getMonthYear = (date: Date) => {
 
 export const getReadableCount = (number: number) => {
 	if (number.toString().length < 4) return number;
-	if (number.toString().length < 7)
-		return `${Math.round((number / 1000) * 100) / 100}K`;
-	if (number.toString().length < 10)
-		return `${Math.round((number / 1000000) * 100) / 100}M`;
+	if (number.toString().length < 7) return `${Math.round((number / 1000) * 100) / 100}K`;
+	if (number.toString().length < 10) return `${Math.round((number / 1000000) * 100) / 100}M`;
 };
 
 export const getReadableDifference = (oldDate: number) => {
 	const delta = Math.abs(Date.now() - oldDate) / 1000;
 	console.log(delta);
 
-	if (delta > 31536000)
-		return new String(Math.floor(delta / 604800 / 52)) + "y";
+	if (delta > 31536000) return new String(Math.floor(delta / 604800 / 52)) + "y";
 
 	if (delta > 604800) return new String(Math.floor(delta / 86400 / 7) + "w");
 

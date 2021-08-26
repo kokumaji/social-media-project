@@ -21,8 +21,7 @@ export const defaultLight: CardScheme = {
 	cardBannerBg: "#9fa1a5",
 	cardText: "black",
 	cardUserText: "#9fa1a5",
-	cardActionColor:
-		"filter: invert(73%) sepia(2%) saturate(422%) hue-rotate(182deg) brightness(88%) contrast(90%);",
+	cardActionColor: "filter: invert(73%) sepia(2%) saturate(422%) hue-rotate(182deg) brightness(88%) contrast(90%);",
 };
 
 export const defaultDark: CardScheme = {
@@ -31,8 +30,7 @@ export const defaultDark: CardScheme = {
 	cardBannerBg: "#9fa1a5",
 	cardText: "white",
 	cardUserText: "#9fa1a5",
-	cardActionColor:
-		"filter: invert(73%) sepia(2%) saturate(422%) hue-rotate(182deg) brightness(88%) contrast(90%);",
+	cardActionColor: "filter: invert(73%) sepia(2%) saturate(422%) hue-rotate(182deg) brightness(88%) contrast(90%);",
 };
 
 export const forestGreen: CardScheme = {
@@ -41,8 +39,7 @@ export const forestGreen: CardScheme = {
 	cardBannerBg: "#557d68",
 	cardText: "#88d46c",
 	cardUserText: "#557d68",
-	cardActionColor:
-		"filter: invert(45%) sepia(37%) saturate(322%) hue-rotate(96deg) brightness(91%) contrast(82%);",
+	cardActionColor: "filter: invert(45%) sepia(37%) saturate(322%) hue-rotate(96deg) brightness(91%) contrast(82%);",
 };
 
 export const cottonCandy: CardScheme = {
@@ -51,8 +48,7 @@ export const cottonCandy: CardScheme = {
 	cardBannerBg: "#f7e8f6",
 	cardText: "#f1c6e7",
 	cardUserText: "#e5b0ea",
-	cardActionColor:
-		"filter: invert(98%) sepia(31%) saturate(454%) hue-rotate(270deg) brightness(97%) contrast(99%);",
+	cardActionColor: "filter: invert(98%) sepia(31%) saturate(454%) hue-rotate(270deg) brightness(97%) contrast(99%);",
 };
 
 export const clearOcean: CardScheme = {
@@ -61,8 +57,7 @@ export const clearOcean: CardScheme = {
 	cardBannerBg: "#cbf1f5",
 	cardText: "#a6e3e9",
 	cardUserText: "#8fbbaf",
-	cardActionColor:
-		"filter: invert(97%) sepia(69%) saturate(654%) hue-rotate(163deg) brightness(101%) contrast(92%);",
+	cardActionColor: "filter: invert(97%) sepia(69%) saturate(654%) hue-rotate(163deg) brightness(101%) contrast(92%);",
 };
 
 export const freshPeach: CardScheme = {
@@ -71,8 +66,7 @@ export const freshPeach: CardScheme = {
 	cardBannerBg: "#eaa285",
 	cardText: "#be7575",
 	cardUserText: "#c4a295",
-	cardActionColor:
-		"filter: invert(96%) sepia(84%) saturate(2505%) hue-rotate(298deg) brightness(96%) contrast(90%);",
+	cardActionColor: "filter: invert(96%) sepia(84%) saturate(2505%) hue-rotate(298deg) brightness(96%) contrast(90%);",
 };
 
 export const summerSunset: CardScheme = {
@@ -81,6 +75,5 @@ export const summerSunset: CardScheme = {
 	cardBannerBg: "#c06c84",
 	cardText: "#f67280",
 	cardUserText: "#c06c84",
-	cardActionColor:
-		"filter: invert(54%) sepia(9%) saturate(1859%) hue-rotate(292deg) brightness(90%) contrast(95%);",
+	cardActionColor: "filter: invert(54%) sepia(9%) saturate(1859%) hue-rotate(292deg) brightness(90%) contrast(95%);",
 };

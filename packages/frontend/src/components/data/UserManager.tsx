@@ -72,11 +72,7 @@ export class UserManager extends React.Component<{}, UserState> {
 	/**
 	 * Register a user with the API.
 	 */
-	async register(
-		username: string,
-		email: string,
-		password: string
-	): Promise<boolean> {
+	async register(username: string, email: string, password: string): Promise<boolean> {
 		try {
 			const { data } = await users.register(username, email, password);
 			// Update state.

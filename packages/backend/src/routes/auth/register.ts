@@ -17,12 +17,10 @@ interface RegisterPayload {
 	email: string;
 }
 
-export const register: RH = (server) => async (req, res) => {
+export const register: RH = server => async (req, res) => {
 	// We strictly want to work with JSON requests, so let's block urlencoded entirely
 	if (req.is("application/x-www-form-urlencoded"))
-		return res
-			.status(403)
-			.json(new RequestDenied("This Request is not allowed here."));
+		return res.status(403).json(new RequestDenied("This Request is not allowed here."));
 
 	const jsonBody = req.body as RegisterPayload;
 
@@ -35,9 +33,7 @@ export const register: RH = (server) => async (req, res) => {
 	const email = jsonBody.email;
 
 	if (!username || !password) {
-		return res
-			.status(400)
-			.json({ msg: "Bad Request, Missing username or password" });
+		return res.status(400).json({ msg: "Bad Request, Missing username or password" });
 	}
 
 	const hashed = await bcrypt.hash(password, 10);
@@ -78,9 +74,6 @@ export const register: RH = (server) => async (req, res) => {
 	server.logger.verbose(`Saved user to database`);
 
 	const sessionAddress = await bcrypt.hash(req.socket.remoteAddress, 10);
-	const token = jwt.sign(
-		{ id: clientUser.id, sessionAddress: sessionAddress },
-		server.options.authSecret as string
-	);
+	const token = jwt.sign({ id: clientUser.id, sessionAddress: sessionAddress }, server.options.authSecret as string);
 	return res.status(200).send({ auth: true, token: token });
 };

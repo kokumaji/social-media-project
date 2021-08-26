@@ -66,9 +66,7 @@ class LoginFormWrapper extends React.Component<
 	/**
 	 * Update component's pb  assword field style.
 	 */
-	private handlePasswordVisibility(
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) {
+	private handlePasswordVisibility(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		this.setState({ showPwd: !this.state.showPwd });
 	}
 
@@ -76,10 +74,7 @@ class LoginFormWrapper extends React.Component<
 		if (e.key != "Enter") return;
 
 		try {
-			const successful = await this.props.userState.authenticate(
-				this.state.username,
-				this.state.password
-			);
+			const successful = await this.props.userState.authenticate(this.state.username, this.state.password);
 			this.setState({ loginFailed: !successful });
 		} catch (err) {
 			console.error(err);
@@ -93,10 +88,7 @@ class LoginFormWrapper extends React.Component<
 		e.preventDefault();
 
 		try {
-			const successful = await this.props.userState.authenticate(
-				this.state.username,
-				this.state.password
-			);
+			const successful = await this.props.userState.authenticate(this.state.username, this.state.password);
 			this.setState({ loginFailed: !successful });
 		} catch (err) {
 			console.error(err);
@@ -133,11 +125,7 @@ class LoginFormWrapper extends React.Component<
 					onChange={this.handleUsernameInput.bind(this)}
 				/>
 
-				{this.state.loginFailed && (
-					<Form.Error>
-						Login Failed. The provided credentials are invalid
-					</Form.Error>
-				)}
+				{this.state.loginFailed && <Form.Error>Login Failed. The provided credentials are invalid</Form.Error>}
 
 				<Form.FieldRow>
 					<Form.PasswordField
@@ -150,17 +138,11 @@ class LoginFormWrapper extends React.Component<
 						onKeyDown={this.handleEnterKey.bind(this)}
 					/>
 
-					<Form.HideSensitive
-						type="submit"
-						onClick={this.handlePasswordVisibility.bind(this)}
-					>
+					<Form.HideSensitive type="submit" onClick={this.handlePasswordVisibility.bind(this)}>
 						{this.state.showPwd ? <Icon.Eye /> : <Icon.EyeSlash />}
 					</Form.HideSensitive>
 				</Form.FieldRow>
-				<Form.ConfirmButton
-					style={buttonStyle}
-					onClick={this.tryLogin.bind(this)}
-				>
+				<Form.ConfirmButton style={buttonStyle} onClick={this.tryLogin.bind(this)}>
 					login
 				</Form.ConfirmButton>
 				<p>
@@ -174,7 +156,5 @@ class LoginFormWrapper extends React.Component<
 }
 
 export const LoginForm = () => (
-	<UserContext.Consumer>
-		{(state) => <LoginFormWrapper userState={state} />}
-	</UserContext.Consumer>
+	<UserContext.Consumer>{state => <LoginFormWrapper userState={state} />}</UserContext.Consumer>
 );

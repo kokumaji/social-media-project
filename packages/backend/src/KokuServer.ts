@@ -14,9 +14,7 @@ export class KokuServer extends BackendServer {
 	constructor(options: ServerConfiguration) {
 		super(options);
 
-		this.app.use(
-			morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })
-		);
+		this.app.use(morgan("dev", { stream: { write: msg => this.logger.http(msg) } }));
 	}
 
 	/**

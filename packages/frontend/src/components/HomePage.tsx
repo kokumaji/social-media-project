@@ -71,13 +71,10 @@ const PostField = styled.textarea`
 `;
 
 function delay(ms: number) {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-class Container extends React.Component<
-	{},
-	{ user?: User; hasError: boolean }
-> {
+class Container extends React.Component<{}, { user?: User; hasError: boolean }> {
 	constructor(props: Readonly<{}>) {
 		super(props);
 		this.state = {
@@ -116,9 +113,7 @@ class Container extends React.Component<
 					</div>
 					<p>
 						<b>Did you know?</b> You joined KokuMedia in{" "}
-						<b>{`${getMonthYear(
-							new Date(this.state.user.data.created_at)
-						)}`}</b>
+						<b>{`${getMonthYear(new Date(this.state.user.data.created_at))}`}</b>
 					</p>
 				</TextBox>
 				<PostForm user={this.state.user}></PostForm>

@@ -41,10 +41,7 @@ class PostFormContainer extends React.Component<
 	render() {
 		return (
 			<PostWrapper>
-				<ContentField
-					value={this.state.postContent}
-					onChange={this.handlePostInput.bind(this)}
-				></ContentField>
+				<ContentField value={this.state.postContent} onChange={this.handlePostInput.bind(this)}></ContentField>
 				<SubmitButton onClick={this.submitPost.bind(this)}>Submit</SubmitButton>
 			</PostWrapper>
 		);
@@ -52,7 +49,5 @@ class PostFormContainer extends React.Component<
 }
 
 export const PostForm = ({ user }: { user?: User }) => (
-	<PostContext.Consumer>
-		{(state) => <PostFormContainer postState={state} user={user} />}
-	</PostContext.Consumer>
+	<PostContext.Consumer>{state => <PostFormContainer postState={state} user={user} />}</PostContext.Consumer>
 );

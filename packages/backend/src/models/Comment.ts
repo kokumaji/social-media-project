@@ -24,8 +24,4 @@ const CommentSchema = new Schema<CommentDocument>({
 	},
 });
 
-export const Comment = model<CommentDocument>(
-	"Comment",
-	CommentSchema,
-	"postcomments"
-);
+export const Comment = model<CommentDocument>("Comment", CommentSchema, "postcomments");

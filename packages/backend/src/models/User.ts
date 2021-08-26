@@ -42,10 +42,7 @@ export const fromID = async (requestedId: string, options?: UserOptions) => {
 	const clientUser = await ClientUser.findOne({ id: requestedId }, { _id: 0 });
 	if (!clientUser) return null;
 
-	const clientProfile = await User.findOne(
-		{ username: clientUser.username },
-		{ _id: 0 }
-	);
+	const clientProfile = await User.findOne({ username: clientUser.username }, { _id: 0 });
 	if (!clientProfile) return null;
 
 	const response: UserResponse = new UserResponse(

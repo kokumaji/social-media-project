@@ -51,5 +51,5 @@ export const registerRole = async (
 };
 
 export const getRole = (name: string) => {
-	return roleCache.find((role) => role.roleName === name);
+	return roleCache.find(role => role.roleName === name);
 };

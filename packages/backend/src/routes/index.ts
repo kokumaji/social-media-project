@@ -38,17 +38,8 @@ export const registerRoutes = (server: KokuServer) => {
 	app.post("/register", register(server));
 
 	app.get("/v1/user", cors(corsOptions), UserRoutes.handleRequest(server));
-	app.get(
-		"/v1/user/:id/:param",
-		cors(corsOptions),
-		authenticateJWT(server),
-		UserRoutes.handleRequest(server)
-	);
-	app.get(
-		"/@me/:param",
-		authenticateJWT(server),
-		SelfRoutes.handleRequest(server)
-	);
+	app.get("/v1/user/:id/:param", cors(corsOptions), authenticateJWT(server), UserRoutes.handleRequest(server));
+	app.get("/@me/:param", authenticateJWT(server), SelfRoutes.handleRequest(server));
 };
 
 const enum HttpHeader {
@@ -62,11 +53,7 @@ const enum HeaderType {
 	BEARER = "Bearer",
 }
 
-const checkHeader = (header: HttpHeader, type: HeaderType) => (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
+const checkHeader = (header: HttpHeader, type: HeaderType) => (req: Request, res: Response, next: NextFunction) => {
 	let validHeader = false;
 	let validType = false;
 	let headerContent;
@@ -87,15 +74,12 @@ const checkHeader = (header: HttpHeader, type: HeaderType) => (
 	}
 
 	if (!headerContent || !validHeader) {
-		return res
-			.status(401)
-			.json(new UnauthorizedError("Invalid Header Content"));
+		return res.status(401).json(new UnauthorizedError("Invalid Header Content"));
 	}
 
 	const headerArguments = headerContent.split(" ");
 
-	if (headerArguments.length != 2)
-		return res.status(401).json(new UnauthorizedError("Invalid Header Length"));
+	if (headerArguments.length != 2) return res.status(401).json(new UnauthorizedError("Invalid Header Length"));
 
 	console.log(headerArguments[0] == HeaderType.BASIC);
 
@@ -108,16 +92,11 @@ const checkHeader = (header: HttpHeader, type: HeaderType) => (
 			break;
 	}
 
-	if (!validType)
-		return res.status(401).json(new UnauthorizedError("Invalid Header Type"));
+	if (!validType) return res.status(401).json(new UnauthorizedError("Invalid Header Type"));
 	next();
 };
 
-const authenticateSecret: RH = () => async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
+const authenticateSecret: RH = () => async (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.headers.authorization;
 	if (authHeader) {
 		let token = authHeader.split(" ")[1];
@@ -126,10 +105,7 @@ const authenticateSecret: RH = () => async (
 			token = token.replace("clientToken:", "");
 
 			const user = await ClientUser.findOne({ clientToken: token });
-			if (!user)
-				return res
-					.status(401)
-					.json(new UnauthorizedError("Invalid Client Secret"));
+			if (!user) return res.status(401).json(new UnauthorizedError("Invalid Client Secret"));
 
 			next();
 		} else {
@@ -146,66 +122,41 @@ interface AuthToken {
 	sessionAddress: string;
 }
 
-const authenticateJWT: RH = (server) => (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
+const authenticateJWT: RH = server => (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.headers.authorization;
 
 	if (authHeader) {
 		const token = authHeader.split(" ")[1];
 
-		jwt.verify(
-			token,
-			server.options.authSecret as string,
-			async (err, payload) => {
-				if (!payload || err)
-					return res
-						.status(403)
-						.json(new RequestDenied("Invalid Bearer Token"));
-				const tokenContent = payload as AuthToken;
+		jwt.verify(token, server.options.authSecret as string, async (err, payload) => {
+			if (!payload || err) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
+			const tokenContent = payload as AuthToken;
 
-				if (!tokenContent.id || !tokenContent.sessionAddress) {
-					console.log("a");
-					return res
-						.status(403)
-						.json(new RequestDenied("Invalid Bearer Token"));
-				}
-
-				const user = await fromID(tokenContent.id);
-				if (!user)
-					return res
-						.status(403)
-						.json(new RequestDenied("Invalid Bearer Token"));
-				next();
+			if (!tokenContent.id || !tokenContent.sessionAddress) {
+				console.log("a");
+				return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
 			}
-		);
+
+			const user = await fromID(tokenContent.id);
+			if (!user) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
+			next();
+		});
 	} else {
-		return res
-			.status(401)
-			.json(new UnauthorizedError("No Bearer Token provided"));
+		return res.status(401).json(new UnauthorizedError("No Bearer Token provided"));
 	}
 };
 
-const authenticateCookie: RH = (server) => (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
+const authenticateCookie: RH = server => (req: Request, res: Response, next: NextFunction) => {
 	const cookie = req.body.token;
 
 	if (cookie) {
 		const token = cookie as string;
 
 		jwt.verify(token, server.options.authSecret as string, (err, payload) => {
-			if (!payload || err)
-				return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
+			if (!payload || err) return res.status(403).json(new RequestDenied("Invalid Bearer Token"));
 			next();
 		});
 	} else {
-		return res
-			.status(401)
-			.json(new UnauthorizedError("No Bearer Token provided"));
+		return res.status(401).json(new UnauthorizedError("No Bearer Token provided"));
 	}
 };

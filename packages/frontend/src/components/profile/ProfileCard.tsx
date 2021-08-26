@@ -122,9 +122,7 @@ export class Mention extends React.Component<{ user: User }> {
 
 		return (
 			<MentionableContainer>
-				<ProfileLink
-					href={`http://localhost:3000/u/${this.props.user.data.id}`}
-				>
+				<ProfileLink href={`http://localhost:3000/u/${this.props.user.data.id}`}>
 					@{this.props.user.data.user_name}
 				</ProfileLink>
 				<ProfileCard>

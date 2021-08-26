@@ -38,20 +38,12 @@ const BadgeContainer = styled.div`
 
 export class NameComponent extends React.Component<{ user: User }> {
 	render() {
-		const userRole = this.props.user.data.role
-			? this.props.user.data.role
-			: UserRole.DEVELOPER;
+		const userRole = this.props.user.data.role ? this.props.user.data.role : UserRole.DEVELOPER;
 		return (
 			<Wrapper>
 				<span>
 					<h3>{this.props.user.data.name}</h3>
-					<BadgeContainer>
-						{userRole.length > 1 ? (
-							<RoleBadge role={userRole as UserRole} />
-						) : (
-							""
-						)}
-					</BadgeContainer>
+					<BadgeContainer>{userRole.length > 1 ? <RoleBadge role={userRole as UserRole} /> : ""}</BadgeContainer>
 				</span>
 				<TagWrapper>@{this.props.user.data.user_name}</TagWrapper>
 			</Wrapper>

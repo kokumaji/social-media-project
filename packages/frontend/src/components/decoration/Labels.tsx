@@ -29,9 +29,7 @@ class Badge extends React.Component<{ content: string; colors?: BadgeColors }> {
 	};
 
 	render() {
-		const colors: BadgeColors = this.props.colors
-			? this.props.colors
-			: this.state.defaultColor;
+		const colors: BadgeColors = this.props.colors ? this.props.colors : this.state.defaultColor;
 		const badgeStyle = {
 			color: colors.textColor,
 			backgroundColor: colors.backgroundColor,
@@ -45,8 +43,7 @@ export const TestBadge = () => <Badge content="Admin" />;
 
 export class RoleBadge extends React.Component<{ role?: UserRole }> {
 	render() {
-		if (this.props.role)
-			return <Badge content={titleCase(this.props.role as UserRole)} />;
+		if (this.props.role) return <Badge content={titleCase(this.props.role as UserRole)} />;
 		return <></>;
 	}
 }

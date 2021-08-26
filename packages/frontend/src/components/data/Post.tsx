@@ -82,8 +82,7 @@ const ActionHandler = styled.div`
 
 	:hover {
 		transition: 0.1s;
-		filter: invert(46%) sepia(22%) saturate(268%) hue-rotate(157deg)
-			brightness(89%) contrast(86%);
+		filter: invert(46%) sepia(22%) saturate(268%) hue-rotate(157deg) brightness(89%) contrast(86%);
 		cursor: pointer;
 	}
 `;
@@ -121,9 +120,7 @@ export class Post extends React.Component<{
 						</ImageContainer>
 						<UserInfo>
 							<h2>
-								<a
-									href={`http://localhost:3000/u/${this.props.author.data.user_name}`}
-								>
+								<a href={`http://localhost:3000/u/${this.props.author.data.user_name}`}>
 									{this.props.author.data.name}
 								</a>
 							</h2>

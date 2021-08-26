@@ -98,8 +98,7 @@ export class LoadingContainer extends React.Component<{
 		"Almost there!",
 	];
 
-	randomItemPicker = () =>
-		this.randomString[Math.floor(Math.random() * this.randomString.length)];
+	randomItemPicker = () => this.randomString[Math.floor(Math.random() * this.randomString.length)];
 
 	componentDidMount() {
 		const id = setInterval(() => {

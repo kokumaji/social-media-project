@@ -11,7 +11,7 @@ interface AuthData {
 	password: string;
 }
 
-export const authorize: RH = (server) => async (req, res) => {
+export const authorize: RH = server => async (req, res) => {
 	if (!req.body) {
 		return res.status(400).json(new BadRequest("Empty or Invalid Body"));
 	}
@@ -25,10 +25,7 @@ export const authorize: RH = (server) => async (req, res) => {
 
 	let isValid = false;
 	if (clientUser) {
-		isValid = bcrypt.compareSync(
-			authData.password,
-			clientUser.credentials.password
-		);
+		isValid = bcrypt.compareSync(authData.password, clientUser.credentials.password);
 	}
 
 	if (!clientUser || !isValid) {
@@ -38,10 +35,7 @@ export const authorize: RH = (server) => async (req, res) => {
 	const existingSessions = await Session.find({ id: clientUser.id });
 
 	for (const sess of existingSessions) {
-		const isAddress = await bcrypt.compare(
-			req.socket.remoteAddress,
-			sess.sessionAddress
-		);
+		const isAddress = await bcrypt.compare(req.socket.remoteAddress, sess.sessionAddress);
 		if (isAddress) {
 			return res
 				.cookie("apiToken", sess.sessionToken, {

@@ -82,11 +82,7 @@ export default class UserResponse {
 	private posts?: IUserPosts;
 	private meta?: IUserMeta;
 
-	constructor(
-		userResponse: IUserResponse,
-		userPosts?: IUserPosts | null,
-		userMeta?: IUserMeta | null
-	) {
+	constructor(userResponse: IUserResponse, userPosts?: IUserPosts | null, userMeta?: IUserMeta | null) {
 		this.data = { ...userDefault, ...userResponse };
 		if (userPosts) this.posts = postsDefault;
 		if (userMeta) this.meta = { ...metaDefault, ...userMeta };

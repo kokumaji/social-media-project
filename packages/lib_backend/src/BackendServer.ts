@@ -8,9 +8,7 @@ import LocaleFile from "./locale/Locale";
 const { printf, combine, label, timestamp, colorize, simple } = format;
 
 const fmt = printf(({ level, message, label, timestamp }) => {
-	return `${chalk.gray(timestamp)} ${label.toLowerCase()}:${level} ${chalk.gray(
-		"→"
-	)} ${message}`;
+	return `${chalk.gray(timestamp)} ${label.toLowerCase()}:${level} ${chalk.gray("→")} ${message}`;
 });
 
 export interface ServerConfiguration {
@@ -49,13 +47,7 @@ export abstract class BackendServer {
 
 		this.logger = createLogger({
 			transports: [new transports.Console()],
-			format: combine(
-				label({ label: this.config.name }),
-				timestamp(),
-				colorize(),
-				simple(),
-				fmt
-			),
+			format: combine(label({ label: this.config.name }), timestamp(), colorize(), simple(), fmt),
 		});
 
 		/* ADD MONGODB WHEN NEEDED

@@ -6,16 +6,10 @@ export default class LocaleFile {
 	private vars: YAML.Document.Parsed;
 
 	constructor() {
-		const langFile = fs.readFileSync(
-			__dirname + "/data/locale.en_US.yml",
-			"utf8"
-		);
+		const langFile = fs.readFileSync(__dirname + "/data/locale.en_US.yml", "utf8");
 		this.data = YAML.parseDocument(langFile);
 
-		const varFile = fs.readFileSync(
-			__dirname + "/data/variables.en_US.yml",
-			"utf8"
-		);
+		const varFile = fs.readFileSync(__dirname + "/data/variables.en_US.yml", "utf8");
 		this.vars = YAML.parseDocument(varFile);
 	}
 

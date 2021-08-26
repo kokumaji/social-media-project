@@ -4,9 +4,7 @@ import { getApiToken } from "./CookieHelper";
 import { User } from "./models/user/User";
 
 export const getUser = (id: string) =>
-	axios
-		.get<User>(`http://localhost:3000/api/v1/user?id=${id}&with_meta=true`)
-		.then((response) => response.data);
+	axios.get<User>(`http://localhost:3000/api/v1/user?id=${id}&with_meta=true`).then(response => response.data);
 
 export const getSelf = async () => {
 	return await axios
@@ -15,7 +13,7 @@ export const getSelf = async () => {
 				Authorization: `Bearer ${getApiToken(document.cookie)}`,
 			},
 		})
-		.then((response) => {
+		.then(response => {
 			return new User(
 				{
 					id: response.data.data.user_id,
