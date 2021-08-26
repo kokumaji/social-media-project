@@ -1,7 +1,7 @@
 {
 	"name": "koku-app",
 	"repository": "git@github.com:kokumaji/social-media-project.git",
-	"author": "Kokumaji <leon.wedelstedt@googlemail.com>",
+	"author": "Kokumaji <kokumaji@outlook.com>",
 	"license": "MIT",
 	"private": true,
 	"workspaces": [
