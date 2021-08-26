@@ -1,13 +1,9 @@
-import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router";
-import styled from "styled-components";
-import UserObject from "../../api/models/user/UserObject";
+import * as React from 'react';
+import styled from 'styled-components';
 
-import * as formatter from "../../api/ReadableData";
-import { getUser } from "../../api/users";
-import { getColorScheme } from "../../theme/colorScheme/profileCards";
-import { User } from "../../types/User";
-import { Icon } from "../media/Icon";
+import { User } from '../../api/models/user/User';
+import * as formatter from '../../api/ReadableData';
+import { Icon } from '../media/Icon';
 
 const PostContainer = styled.div`
 	display: flex;
@@ -105,7 +101,10 @@ const Timestamp = styled.div`
 	text-align: center;
 `;
 
-export class Post extends React.Component<{ author: UserObject; message: string }> {
+export class Post extends React.Component<{
+	author: User;
+	message: string;
+}> {
 	render() {
 		return (
 			<PostContainer>

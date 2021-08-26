@@ -15,7 +15,7 @@ export type UserStateProvider = UserState & {
 };
 
 const checkCookie = () => {
-	var cookie = getApiToken(document.cookie);
+	const cookie = getApiToken(document.cookie);
 
 	return cookie ? true : false;
 };

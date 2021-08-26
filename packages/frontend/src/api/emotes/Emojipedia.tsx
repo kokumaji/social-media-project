@@ -11,7 +11,7 @@ import travel from "./data/travel.json";
 const allEmotes: any = {...activities, ...emoticons, ...flags, ...food, ...nature, ...objects, ...people, ...symbols, ...travel};
 
 export const get = (str: string) => {
-    for(let emote in allEmotes) {
+    for(const emote in allEmotes) {
         if(emote === str) return allEmotes[emote];
     }
 

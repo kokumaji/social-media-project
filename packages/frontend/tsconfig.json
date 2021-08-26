@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"lib": ["dom", "dom.iterable"],
+		"lib": ["ESNext","dom", "dom.iterable"],
 		"jsx": "preserve"
 	},
 	"extends": "../../tsconfig.json",

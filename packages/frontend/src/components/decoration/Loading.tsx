@@ -103,7 +103,7 @@ export class LoadingContainer extends React.Component<{ text?: string | null }> 
     );
 
     componentDidMount(){
-        var id = setInterval(() => {
+        const id = setInterval(() => {
             this.setState( { randomItem : this.randomItemPicker() })
         }, 2000);
         this.setState({ intervalId: id });

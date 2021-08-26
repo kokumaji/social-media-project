@@ -1,15 +1,15 @@
-import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router";
-import styled from "styled-components";
+import * as React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
+import styled from 'styled-components';
 
-import { getMonthYear } from "../api/ReadableData";
-import { getUser } from "../api/users";
-import { defaultDark } from "../theme/colorScheme/profileCards";
-import { Post } from "./data/Post";
-import UserObject, { defaultUser } from "../api/models/user/UserObject";
-import { CardScheme } from "../types/Theme";
-import { darkTheme } from "../theme/colorScheme/colors";
-import { NameComponent } from "./profile/AccountName";
+import { User } from '../api/models/user/User';
+import { getMonthYear } from '../api/ReadableData';
+import { getUser } from '../api/users';
+import { darkTheme } from '../theme/colorScheme/colors';
+import { defaultDark } from '../theme/colorScheme/profileCards';
+import { CardScheme } from '../types/Theme';
+import { Post } from './data/Post';
+import { NameComponent } from './profile/AccountName';
 
 const ProfilePicture = styled.div`
 	height: 6em;
@@ -24,25 +24,23 @@ const HeaderWrapper = styled.div`
 	height: 20em;
 
 	display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+	flex-wrap: wrap;
+	flex-direction: column;
 
 	padding: 0;
 
-	background-color: ${darkTheme.main.componentColor}
+	background-color: ${darkTheme.main.componentColor};
 `;
 
 const NameContainer = styled.div`
-    line-height: 5%;
-    text-align: left;
+	line-height: 5%;
+	text-align: left;
 
 	height: 8em;
 
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-    ${darkTheme.textFields.border}
-
 `;
 
 const ContentWrapper = styled.div`
@@ -53,38 +51,40 @@ const ContentWrapper = styled.div`
 `;
 
 const MiscContent = styled.div`
-    top: 0;
-    text-align: left;
-    flex: 1 0 10%;
+	top: 0;
+	text-align: left;
+	flex: 1 0 10%;
 
-    padding: 1em 2em 1em 2em;
+	padding: 1em 2em 1em 2em;
 
 	display: flex;
-	flex-direction: row; 
+	flex-direction: row;
 	justify-content: space-around;
 
-    label {
-        font-size: 1em;
-    }
+	label {
+		font-size: 1em;
+	}
 `;
 
 const DescriptionField = styled.div`
-    top: 0;
-    text-align: left;
-    flex: 1 0 10%;
+	top: 0;
+	text-align: left;
+	flex: 1 0 10%;
 
-    padding: 0.5em;
+	padding: 0.5em;
 
-    label {
-        font-size: 1em;
-    }
+	label {
+		font-size: 1em;
+	}
 `;
 
-class ProfileComponent extends React.Component<RouteComponentProps<{ id: string }>, { userData: UserObject; notFound: boolean, imgUrl: string }> {
-	
+class ProfileComponent extends React.Component<
+	RouteComponentProps<{ id: string }>,
+	{ userData: User; notFound: boolean; imgUrl: string }
+> {
 	state = {
 		notFound: false,
-		userData: defaultUser,
+		userData: User.defaultUser,
 		imgUrl: `http://localhost:8000/profile_pictures/0`
 	};
 
@@ -93,9 +93,9 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
 		try {
 			const queriedUser = await getUser(id);
 			this.setState({
-				userData: queriedUser as UserObject,
+				userData: queriedUser,
 				imgUrl: `http://localhost:8000/profile_pictures/${id}`
-			})
+			});
 		} catch (err) {
 			console.log(err);
 			this.setState({ notFound: true });
@@ -106,33 +106,36 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
 		const colorScheme: CardScheme = defaultDark as CardScheme;
 
 		const bannerBg = {
-			backgroundColor: colorScheme.cardBannerBg,/*
+			backgroundColor:
+				colorScheme.cardBannerBg /*
 			backgroundImage: `url(${this.state.userData.media.profile_banner_url})`,
 			backgroundRepeat: "no-repeat",
 			backgroundSize: "cover",*/
 		};
 
-        const withImage = {
-            backgroundImage: `url(${this.state.imgUrl})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-        };
+		const withImage = {
+			backgroundImage: `url(${this.state.imgUrl})`,
+			backgroundSize: "cover",
+			backgroundRepeat: "no-repeat"
+		};
 
 		const userNameColor = {
-			color: colorScheme.cardUserText,
+			color: colorScheme.cardUserText
 		};
 
 		const style = {
 			backgroundColor: colorScheme.cardBackground,
 			borderColor: colorScheme.cardBackground,
-			color: colorScheme.cardText,
+			color: colorScheme.cardText
 		};
 
 		const numberOfPosts = 0;
 
 		const posts = [];
 
-		const fixedDate: Date = this.state.userData.data.created_at ? new Date(this.state.userData.data.created_at.toString()) : new Date(0);
+		const fixedDate: Date = this.state.userData.data.created_at
+			? new Date(this.state.userData.data.created_at.toString())
+			: new Date(0);
 
 		for (let i = 0; i < numberOfPosts; i++) {
 			posts[i] = <Post author={this.state.userData} message="Hello World!" />;
@@ -146,12 +149,18 @@ class ProfileComponent extends React.Component<RouteComponentProps<{ id: string 
 						<NameComponent user={this.state.userData}></NameComponent>
 					</NameContainer>
 					<DescriptionField>
-                    	<label>{this.state.userData.meta.description}</label>
-                	</DescriptionField>
+						<label>{this.state.userData.meta.description}</label>
+					</DescriptionField>
 					<MiscContent>
-						<label><b>Location</b> {this.state.userData.meta.location}</label>
-						<label><b>Gender</b> {this.state.userData.meta.gender}</label>
-						<label><b>Joined</b> {getMonthYear(fixedDate)}</label>
+						<label>
+							<b>Location</b> {this.state.userData.meta.location}
+						</label>
+						<label>
+							<b>Gender</b> {this.state.userData.meta.gender}
+						</label>
+						<label>
+							<b>Joined</b> {getMonthYear(fixedDate)}
+						</label>
 					</MiscContent>
 				</ContentWrapper>
 			</HeaderWrapper>
