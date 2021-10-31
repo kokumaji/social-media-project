@@ -1,2 +1,2 @@
-export * from './BackendServer';
-export * from './locale/Locale';
+export * from "./BackendServer";
+export * from "./locale/Locale";

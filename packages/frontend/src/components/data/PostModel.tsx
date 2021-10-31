@@ -1,4 +1,4 @@
 export interface PostModel {
-    author: string,
-    content: string
+	author: string;
+	content: string;
 }

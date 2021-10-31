@@ -1,8 +1,8 @@
 import React from "react";
 
 export enum UserRole {
-    OWNER = "Owner",
-    DEVELOPER = "Developer",
-    MODERATOR = "Moderator",
-    PARTNER = "Partner",
+	OWNER = "Owner",
+	DEVELOPER = "Developer",
+	MODERATOR = "Moderator",
+	PARTNER = "Partner",
 }

@@ -17,12 +17,10 @@ interface RegisterPayload {
 	email: string;
 }
 
-export const register: RH = (server) => async (req, res) => {
+export const register: RH = server => async (req, res) => {
 	// We strictly want to work with JSON requests, so let's block urlencoded entirely
 	if (req.is("application/x-www-form-urlencoded"))
-		return res
-			.status(403)
-			.json(new RequestDenied("This Request is not allowed here."));
+		return res.status(403).json(new RequestDenied("This Request is not allowed here."));
 
 	const jsonBody = req.body as RegisterPayload;
 
@@ -35,15 +33,11 @@ export const register: RH = (server) => async (req, res) => {
 	const email = jsonBody.email;
 
 	if (!username || !password) {
-		return res
-			.status(400)
-			.json({ msg: "Bad Request, Missing username or password" });
+		return res.status(400).json({ msg: "Bad Request, Missing username or password" });
 	}
 
 	const hashed = await bcrypt.hash(password, 10);
-	server.logger.verbose(
-		`Attempting to register user - username='${username}'`
-	);
+	server.logger.verbose(`Attempting to register user - username='${username}'`);
 
 	// If user already exists
 	if (await ClientUser.exists({ username })) {
@@ -52,11 +46,12 @@ export const register: RH = (server) => async (req, res) => {
 
 	const clientUser = new ClientUser({
 		username: username,
-		credentials: { 
-			email, password: hashed
+		credentials: {
+			email,
+			password: hashed,
 		},
 		id: IdGen.userId(),
-		role: getRole("regular")
+		role: getRole("regular"),
 	});
 
 	const clientProfile = new User({
@@ -69,16 +64,14 @@ export const register: RH = (server) => async (req, res) => {
 			imageUrl: "null",
 			description: "null",
 			bannerUrl: "null",
-			cardScheme: "SummerSunset"
-		}
+			cardScheme: "SummerSunset",
+		},
 	});
 
 	await clientProfile.save();
 	await clientUser.save();
 
-	server.logger.verbose(
-		`Saved user to database`
-	);
+	server.logger.verbose(`Saved user to database`);
 
 	const sessionAddress = await bcrypt.hash(req.socket.remoteAddress, 10);
 	const token = jwt.sign({ id: clientUser.id, sessionAddress: sessionAddress }, server.options.authSecret as string);

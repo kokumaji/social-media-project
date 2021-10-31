@@ -1,1 +1,1 @@
-declare module 'emoji-dictionary';
+declare module "emoji-dictionary";

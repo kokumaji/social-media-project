@@ -15,12 +15,12 @@ export type UserStateProvider = UserState & {
 };
 
 const checkCookie = () => {
-	var cookie = getApiToken(document.cookie);
+	const cookie = getApiToken(document.cookie);
 
 	return cookie ? true : false;
 };
 
-export const UserContext = React.createContext<UserStateProvider> ({
+export const UserContext = React.createContext<UserStateProvider>({
 	authed: checkCookie(),
 	id: "",
 	authenticate: async () => false,
@@ -28,11 +28,11 @@ export const UserContext = React.createContext<UserStateProvider> ({
 });
 
 interface UserDataProvider {
-	user: UserModel | null
+	user: UserModel | null;
 }
 
 export const UserData = React.createContext<UserDataProvider>({
-	user: null
+	user: null,
 });
 
 /**
@@ -72,11 +72,7 @@ export class UserManager extends React.Component<{}, UserState> {
 	/**
 	 * Register a user with the API.
 	 */
-	async register(
-		username: string,
-		email: string,
-		password: string
-	): Promise<boolean> {
+	async register(username: string, email: string, password: string): Promise<boolean> {
 		try {
 			const { data } = await users.register(username, email, password);
 			// Update state.

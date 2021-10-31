@@ -11,16 +11,12 @@ export const generate = (timestamp: number | Date = Date.now()) => {
 	if (timestamp instanceof Date) timestamp = timestamp.getTime();
 	if (typeof timestamp !== "number" || isNaN(timestamp)) {
 		throw new TypeError(
-			`"timestamp" argument must be a number (received ${
-				isNaN(timestamp) ? "NaN" : typeof timestamp
-			})`
+			`"timestamp" argument must be a number (received ${isNaN(timestamp) ? "NaN" : typeof timestamp})`
 		);
 	}
 	if (INCREMENT >= 4095) INCREMENT = 0;
 	// eslint-disable-next-line max-len
-	const BINARY = `${(timestamp - EPOCH)
-		.toString(2)
-		.padStart(42, "0")}0000100000${(INCREMENT++)
+	const BINARY = `${(timestamp - EPOCH).toString(2).padStart(42, "0")}0000100000${(INCREMENT++)
 		.toString(2)
 		.padStart(12, "0")}`;
 	return binaryToID(BINARY);
@@ -72,7 +68,7 @@ const idToBinary = (num: string) => {
 
 export const userId = () => {
 	return Math.floor(Math.random() * 100000000) + 1;
-}
+};
 
 /**
  * Transforms a snowflake from a bit string to a decimal string.

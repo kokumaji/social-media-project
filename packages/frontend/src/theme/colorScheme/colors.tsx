@@ -6,7 +6,7 @@ export const darkTheme: ColorTheme = {
 		componentColor: "#181818",
 		linkColor: "#FFF",
 		textColor: "#FFF",
-		toggleBorder: "6B8096"
+		toggleBorder: "6B8096",
 	},
 	textFields: {
 		fieldColor: "#2b2b2b",
@@ -14,7 +14,7 @@ export const darkTheme: ColorTheme = {
 		border: "border-radius:0.25em;border-style:none;",
 	},
 	accents: {
-		mainAccent: '#5e8c83',
-		secondaryAccent: "#5e8c83"
-	}
+		mainAccent: "#5e8c83",
+		secondaryAccent: "#5e8c83",
+	},
 };

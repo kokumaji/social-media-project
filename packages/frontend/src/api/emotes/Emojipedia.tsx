@@ -8,12 +8,22 @@ import people from "./data/people.json";
 import symbols from "./data/symbols.json";
 import travel from "./data/travel.json";
 
-const allEmotes: any = {...activities, ...emoticons, ...flags, ...food, ...nature, ...objects, ...people, ...symbols, ...travel};
+const allEmotes: any = {
+	...activities,
+	...emoticons,
+	...flags,
+	...food,
+	...nature,
+	...objects,
+	...people,
+	...symbols,
+	...travel,
+};
 
 export const get = (str: string) => {
-    for(let emote in allEmotes) {
-        if(emote === str) return allEmotes[emote];
-    }
+	for (const emote in allEmotes) {
+		if (emote === str) return allEmotes[emote];
+	}
 
-    return str;
-} 
+	return str;
+};

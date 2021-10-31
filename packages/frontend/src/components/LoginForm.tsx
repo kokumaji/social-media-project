@@ -42,7 +42,7 @@ class LoginFormWrapper extends React.Component<
 		password: "",
 		loginFailed: false,
 		showPwd: false,
-		buttonColor: "#181818"
+		buttonColor: "#181818",
 	};
 
 	/**
@@ -58,28 +58,23 @@ class LoginFormWrapper extends React.Component<
 	private handlePasswordInput(e: React.ChangeEvent<HTMLInputElement>) {
 		this.setState({ password: e.target.value });
 		if (e.target.value === "") this.setState({ loginFailed: false });
-		if(e.target.value.length >= 8) {
-			this.state.buttonColor = '#5e8c83';
-		} else this.state.buttonColor = '#181818';
+		if (e.target.value.length >= 8) {
+			this.state.buttonColor = "#5e8c83";
+		} else this.state.buttonColor = "#181818";
 	}
 
 	/**
 	 * Update component's pb  assword field style.
 	 */
-	private handlePasswordVisibility(
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) {
+	private handlePasswordVisibility(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		this.setState({ showPwd: !this.state.showPwd });
 	}
 
 	private async handleEnterKey(e: React.KeyboardEvent<HTMLInputElement>) {
-		if(e.key != "Enter") return;
-		
+		if (e.key != "Enter") return;
+
 		try {
-			const successful = await this.props.userState.authenticate(
-				this.state.username,
-				this.state.password
-			);
+			const successful = await this.props.userState.authenticate(this.state.username, this.state.password);
 			this.setState({ loginFailed: !successful });
 		} catch (err) {
 			console.error(err);
@@ -93,10 +88,7 @@ class LoginFormWrapper extends React.Component<
 		e.preventDefault();
 
 		try {
-			const successful = await this.props.userState.authenticate(
-				this.state.username,
-				this.state.password
-			);
+			const successful = await this.props.userState.authenticate(this.state.username, this.state.password);
 			this.setState({ loginFailed: !successful });
 		} catch (err) {
 			console.error(err);
@@ -111,11 +103,11 @@ class LoginFormWrapper extends React.Component<
 			borderStyle: `${borderStyle}`,
 			borderColor: `${borderColor}`,
 			color: `${borderColor}`,
-			transition: "0.1s"
+			transition: "0.1s",
 		};
 		const buttonStyle = {
 			backgroundColor: `${this.state.buttonColor}`,
-			transition: "0.2s"
+			transition: "0.2s",
 		};
 
 		return !this.props.userState.authed ? (
@@ -123,7 +115,9 @@ class LoginFormWrapper extends React.Component<
 				{console.log(this.props.userState.authed)}
 				<h1>{Language.projectName.toUpperCase()}</h1>
 
-				<Form.FieldLabel>Sign in with your <b>{Language.projectName} Account</b></Form.FieldLabel>
+				<Form.FieldLabel>
+					Sign in with your <b>{Language.projectName} Account</b>
+				</Form.FieldLabel>
 				<Form.InputField
 					maxLength={20}
 					value={this.state.username}
@@ -131,10 +125,7 @@ class LoginFormWrapper extends React.Component<
 					onChange={this.handleUsernameInput.bind(this)}
 				/>
 
-
-				{this.state.loginFailed && (
-					<Form.Error>Login Failed. The provided credentials are invalid</Form.Error>
-				)}
+				{this.state.loginFailed && <Form.Error>Login Failed. The provided credentials are invalid</Form.Error>}
 
 				<Form.FieldRow>
 					<Form.PasswordField
@@ -147,15 +138,11 @@ class LoginFormWrapper extends React.Component<
 						onKeyDown={this.handleEnterKey.bind(this)}
 					/>
 
-					<Form.HideSensitive
-						type="submit"
-						onClick={this.handlePasswordVisibility.bind(this)}
-					>
+					<Form.HideSensitive type="submit" onClick={this.handlePasswordVisibility.bind(this)}>
 						{this.state.showPwd ? <Icon.Eye /> : <Icon.EyeSlash />}
 					</Form.HideSensitive>
-					
 				</Form.FieldRow>
-				<Form.ConfirmButton style={buttonStyle} onClick={this.tryLogin.bind(this)} >
+				<Form.ConfirmButton style={buttonStyle} onClick={this.tryLogin.bind(this)}>
 					login
 				</Form.ConfirmButton>
 				<p>
@@ -169,7 +156,5 @@ class LoginFormWrapper extends React.Component<
 }
 
 export const LoginForm = () => (
-	<UserContext.Consumer>
-		{state => <LoginFormWrapper userState={state} />}
-	</UserContext.Consumer>
+	<UserContext.Consumer>{state => <LoginFormWrapper userState={state} />}</UserContext.Consumer>
 );

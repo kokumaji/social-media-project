@@ -1,22 +1,17 @@
 import { Document, model, Schema } from "mongoose";
 
 interface SessionDocument extends Document {
+	createdAt: number;
 
-    createdAt: number;
-
-    sessionToken: string;
-    sessionAddress: string;
-
+	sessionToken: string;
+	sessionAddress: string;
 }
 
 const SessionSchema = new Schema<SessionDocument>({
-    id: String, 
-    createdAt: { type: Number, default: Date.now },
-    sessionToken: String,
-    sessionAddress: String
+	id: String,
+	createdAt: { type: Number, default: Date.now },
+	sessionToken: String,
+	sessionAddress: String,
 });
 
-export const Session = model<SessionDocument>(
-    "Session",
-    SessionSchema
-);
+export const Session = model<SessionDocument>("Session", SessionSchema);

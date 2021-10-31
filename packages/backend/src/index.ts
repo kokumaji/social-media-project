@@ -11,7 +11,7 @@ const server = new KokuServer({
 	mongoDB: process.env.DATABASE_URI || "",
 	server_port: Number(process.env.PORT) || 8080,
 	authSecret: process.env.AUTH_SECRET,
-	name: "backend"
+	name: "backend",
 });
 
 server.logger.level = "debug";

@@ -40,10 +40,10 @@ export const enum Status {
 
 export const fromID = async (requestedId: string, options?: UserOptions) => {
 	const clientUser = await ClientUser.findOne({ id: requestedId }, { _id: 0 });
-	if(!clientUser) return null;
+	if (!clientUser) return null;
 
 	const clientProfile = await User.findOne({ username: clientUser.username }, { _id: 0 });
-	if(!clientProfile) return null;
+	if (!clientProfile) return null;
 
 	const response: UserResponse = new UserResponse(
 		{
@@ -51,16 +51,21 @@ export const fromID = async (requestedId: string, options?: UserOptions) => {
 			user_id_str: clientUser.id,
 			name: clientProfile.fullname,
 			user_name: clientUser.username,
-			created_at: new Date(clientUser.createdAt)
-		}, options?.with_posts ? { 
-			posts_count: 0 
-		} : null,  
-		options?.with_meta ? { 
-			gender: clientProfile.gender,
-			location: clientProfile.location,
-			description: clientProfile.profile.description
-		} : null
+			created_at: new Date(clientUser.createdAt),
+		},
+		options?.with_posts
+			? {
+					posts_count: 0,
+			  }
+			: null,
+		options?.with_meta
+			? {
+					gender: clientProfile.gender,
+					location: clientProfile.location,
+					description: clientProfile.profile.description,
+			  }
+			: null
 	);
 
 	return response;
-}; 
+};

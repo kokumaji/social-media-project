@@ -1,12 +1,8 @@
 import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router";
 import styled from "styled-components";
-import UserObject from "../../api/models/user/UserObject";
 
+import { User } from "../../api/models/user/User";
 import * as formatter from "../../api/ReadableData";
-import { getUser } from "../../api/users";
-import { getColorScheme } from "../../theme/colorScheme/profileCards";
-import { User } from "../../types/User";
 import { Icon } from "../media/Icon";
 
 const PostContainer = styled.div`
@@ -86,8 +82,7 @@ const ActionHandler = styled.div`
 
 	:hover {
 		transition: 0.1s;
-		filter: invert(46%) sepia(22%) saturate(268%) hue-rotate(157deg)
-			brightness(89%) contrast(86%);
+		filter: invert(46%) sepia(22%) saturate(268%) hue-rotate(157deg) brightness(89%) contrast(86%);
 		cursor: pointer;
 	}
 `;
@@ -105,7 +100,10 @@ const Timestamp = styled.div`
 	text-align: center;
 `;
 
-export class Post extends React.Component<{ author: UserObject; message: string }> {
+export class Post extends React.Component<{
+	author: User;
+	message: string;
+}> {
 	render() {
 		return (
 			<PostContainer>
@@ -122,9 +120,7 @@ export class Post extends React.Component<{ author: UserObject; message: string 
 						</ImageContainer>
 						<UserInfo>
 							<h2>
-								<a
-									href={`http://localhost:3000/u/${this.props.author.data.user_name}`}
-								>
+								<a href={`http://localhost:3000/u/${this.props.author.data.user_name}`}>
 									{this.props.author.data.name}
 								</a>
 							</h2>
