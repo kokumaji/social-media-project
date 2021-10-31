@@ -3,6 +3,7 @@ import express from "express";
 import { registerRoutes } from "./routes";
 
 import { BackendServer, ServerConfiguration } from "@koku-app/lib_backend";
+import fileUpload from "express-fileupload";
 
 export class DeliveryServer extends BackendServer {
 	app = express();
@@ -14,8 +15,8 @@ export class DeliveryServer extends BackendServer {
 		this.app.use(express.json());
 		this.app.set("json spaces", 2);
 		/* ADD MONGODB WHEN NEEDED
-        this.app.use(
-			morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })
+        this.app.use(fileUpload())
+        this.app.use(morgan("dev", { stream: { write: (msg) => this.logger.http(msg) } })
 		);*/
 	}
 
